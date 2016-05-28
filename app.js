@@ -1,28 +1,23 @@
-/*eslint-env node*/
+// server.js
 
-//------------------------------------------------------------------------------
-// node.js starter application for Bluemix
-//------------------------------------------------------------------------------
+// BASE SETUP
+// =============================================================================
 
-// This application uses express as its web server
-// for more info, see: http://expressjs.com
-var express = require('express');
+// call the packages we need
+const express    = require('express');        // call express
+const cfenv = require('cfenv');
+const app        = express();                 // define our app using express
+const bodyParser = require('body-parser');
+const appEnv = cfenv.getAppEnv();
+const routes = require('./routes');
 
-// cfenv provides access to your Cloud Foundry environment
-// for more info, see: https://www.npmjs.com/package/cfenv
-var cfenv = require('cfenv');
+const router = routes(express.Router);
 
-// create a new express server
-var app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-// serve the files out of ./public as our main files
-app.use(express.static(__dirname + '/public'));
+app.use('/api', router);
 
-// get the app environment from Cloud Foundry
-var appEnv = cfenv.getAppEnv();
-
-// start server on the specified port and binding host
-app.listen(appEnv.port, '0.0.0.0', function() {
-  // print a message when the server starts listening
+app.listen(appEnv.port, '0.0.0.0',()=> {
   console.log("server starting on " + appEnv.url);
 });

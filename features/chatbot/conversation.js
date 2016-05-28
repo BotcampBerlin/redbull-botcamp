@@ -23,16 +23,9 @@ function updateConversationData(sender) {
   console.log(sender.id, conversationsData[sender.id]);
   if(!conversationsData[sender.id]) {
     conversationsData[sender.id] = {
-      idx: 0,
-      first_name: "<placeholder>"
+      idx: 0
     };
   } else {
-
-    Sender.getUserData(sender.id).then(data => {
-      console.log("User data: ", data);
-      conversationsData[sender.id][first_name] = data.first_name;
-    });
-
     if(conversationsData[sender.id].idx >= _.size(danielJson)) {
       console.log('bigger')
       conversationsData[sender.id].idx = 0;
@@ -109,6 +102,18 @@ function determinePayloadAnswer(payload){
   return answers[payload];
 }
 
+function setUserFirstName(sender) {
+  if(!conversationsData[sender.id]) {
+    conversationsData[sender.id] = {};
+  }
+  if(!conversationsData[sender.id]['first_name']) {
+    Sender.getUserData(sender.id).then(data => {
+      console.log("User data: ", data);
+      conversationsData[sender.id]['first_name'] = data.first_name;
+    });
+  }
+}
+
 setGreetingMessage();
 
 module.exports = {
@@ -119,6 +124,7 @@ module.exports = {
       console.log('bar', event);
       const message = event.message;
       const postback = event.postback;
+      setUserFirstName(event.sender);
       if(postback) {
         const answer = determinePayloadAnswer(postback.payload);
         return sendTextMessage(event.sender, answer);

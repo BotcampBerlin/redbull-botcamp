@@ -23,9 +23,16 @@ function updateConversationData(sender) {
   console.log(sender.id, conversationsData[sender.id]);
   if(!conversationsData[sender.id]) {
     conversationsData[sender.id] = {
-      idx: 0
+      idx: 0,
+      first_name: "<placeholder>"
     };
   } else {
+
+    Sender.getUserData(sender.id).then(data => {
+      console.log("User data: ", data);
+      conversationsData[sender.id][first_name] = data.first_name;
+    });
+
     if(conversationsData[sender.id].idx >= _.size(danielJson)) {
       console.log('bigger')
       conversationsData[sender.id].idx = 0;
@@ -38,8 +45,8 @@ function updateConversationData(sender) {
 }
 
 function askQuestion(sender, question_text, answers) {
-  answer_buttons = [];
-  _.forEach(answers, function (answer_object) {
+  var answer_buttons = [];
+  _.forEach(answers, answer_object => {
     answer_buttons.push({
         "type":"postback",
         "title": answers_object.title,
@@ -51,7 +58,7 @@ function askQuestion(sender, question_text, answers) {
       "type":"template",
       "payload":{
         "template_type":"button",
-        "text": question_text
+        "text": question_text,
         "buttons": answer_buttons
       }
     }

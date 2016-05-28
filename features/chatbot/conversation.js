@@ -8,7 +8,7 @@ function updateConversationData(sender) {
   console.log('update!', sender, conversationsData[sender.id]['answerDelayActive'])
 
   console.log(sender.id, conversationsData[sender.id]);
-  if(!conversationsData[sender.id]['idx']) {
+  if(_.isUndefined(conversationsData[sender.id]['idx'])) {
     conversationsData[sender.id]['idx'] = 0;
   } else {
     if(conversationsData[sender.id].idx >= _.size(danielJson) - 1) {
@@ -39,7 +39,7 @@ function askQuestion(sender, question_text, answers) {
 
 function createButtons(buttons) {
   return _.map(buttons, elem => {
-    if (typeof elem.payload === 'undefined') {
+    if (_.isUndefined(elem.payload)) {
       elem.payload = elem.title.toLowerCase().replace(/ /, '_');
     }
     return {

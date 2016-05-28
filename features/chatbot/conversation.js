@@ -12,6 +12,10 @@ function sendTextMessage(sender) {
   const idx = conversationsData[sender.id].idx;
   const message = danielJson[idx];
   console.log(message);
+  return sendMessage(id, message);
+}
+
+function sendMessage(id, message) {
   return request({
       url: 'https://graph.facebook.com/v2.6/me/messages',
       qs: {access_token: ACCESS_TOKEN},

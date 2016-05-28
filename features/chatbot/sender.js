@@ -6,24 +6,25 @@ const ACCESS_TOKEN = 'EAADZAm3wsdkUBAM1jy5EOT5VZACZCymaFJJoxXAKe8D1WtWZCHVWlzRoF
 const PAGE_ID = 'redbullwingbot';
 
 function sendMessage(sender, message, api_endpoint) {
-  if (typeof api_endpoint === 'undefined') {
-    api_endpoint = 'me/messages';
-  }
-  var payload;
-  if (sender === null) {
-    payload = message
-  } else {
-    payload = {
+    var api_endpoint = 'me/messages';
+    var payload = {
         recipient: sender,
         message
     }
   }
-  return request({
+  return sendRequest(api_endpoint, payload, {});
+}
+
+function sendRequest(api_endpoint, payload, qs) {
+    if (!qs.hasOwnProperty('access_token')) {
+      qs[access_token] = ACCESS_TOKEN;
+    }
+    return request({
       url: BASE_URL + api_endpoint,
-      qs: {access_token: ACCESS_TOKEN},
+      qs: qs,
       method: 'POST',
       json: payload
-  })
+    })
     .then(response => {
       if (response.body.error) {
         console.log('Error: ', response.body.error)
@@ -32,12 +33,13 @@ function sendMessage(sender, message, api_endpoint) {
     .catch(e => {
       console.log('Error sending messages: ', e)
     })
-}
+  }
 
 function sendSettingsMessage(message) {
-  return sendMessage(null, message, PAGE_ID + '/thread_settings');
+  return sendRequest(PAGE_ID + '/thread_settings', message, {});
 }
 
 module.exports = {
-  sendMessage
+  sendMessage,
+  sendSettingsMessage,
 }

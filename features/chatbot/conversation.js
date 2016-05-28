@@ -54,11 +54,13 @@ function updateConversationData(sender) {
 
 module.exports = {
   chat(entries) {
+    console.log('foo', entries);
     const messagingEvents = _.head(entries).messaging;
     _.each(messagingEvents, event => {
+      console.log('bar', event);
       const message = event.message;
       if (message) {
-        console.log('message fine')
+        console.log('message fine', event.sender)
         updateConversationData(event.sender);
         sendTextMessage(event.sender);
       }

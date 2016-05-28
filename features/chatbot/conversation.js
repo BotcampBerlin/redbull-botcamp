@@ -63,8 +63,9 @@ function updateConversationData(sender) {
       console.log('bigger')
       conversationsData[sender.id].idx = 0;
     } else {
-      console.log('increment');
-      conversationsData[sender.id].idx = conversationsData[sender.id].idx++;
+      console.log('increment', conversationsData[sender.id].idx);
+      conversationsData[sender.id].idx = conversationsData[sender.id].idx + 1;
+      console.log(conversationsData[sender.id].idx)
     }
   }
 }

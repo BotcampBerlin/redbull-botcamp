@@ -12,6 +12,10 @@ function sendTextMessage(sender) {
   const idx = conversationsData[sender.id].idx;
   const message = danielJson[idx];
   console.log(message);
+  return sendMessage(id, message);
+}
+
+function sendMessage(id, message) {
   return request({
       url: 'https://graph.facebook.com/v2.6/me/messages',
       qs: {access_token: ACCESS_TOKEN},
@@ -50,8 +54,10 @@ function updateConversationData(sender) {
 
 module.exports = {
   chat(entries) {
+    console.log('foo', entries);
     const messagingEvents = _.head(entries).messaging;
     _.each(messagingEvents, event => {
+      console.log('bar', event);
       const message = event.message;
       if (message) {
         console.log('message fine', event.sender)

@@ -11,17 +11,23 @@ function sendMessage(sender, message, api_endpoint) {
     recipient: sender,
     message
   }
-  return sendRequest(api_endpoint, payload, {});
+  return sendRequest(api_endpoint, payload);
 }
 
-function sendRequest(api_endpoint, payload, qs) {
+function sendRequest(api_endpoint, payload, qs, method) {
+  if (typeof qs === 'undefined') {
+    qs = {};
+  }
   if (!qs.hasOwnProperty('access_token')) {
     qs['access_token'] = ACCESS_TOKEN;
+  }
+  if (typeof method === 'undefined') {
+    method = 'POST';
   }
   return request({
     url: BASE_URL + api_endpoint,
     qs: qs,
-    method: 'POST',
+    method: method,
     json: payload
   })
   .then(response => {
@@ -35,7 +41,7 @@ function sendRequest(api_endpoint, payload, qs) {
 }
 
 function sendSettingsMessage(message) {
-  return sendRequest(PAGE_ID + '/thread_settings', message, {});
+  return sendRequest(PAGE_ID + '/thread_settings', message);
 }
 
 function getUserData(user) {
@@ -43,7 +49,7 @@ function getUserData(user) {
   var qs = {
     fields: "first_name"
   }
-  return sendRequest(api_endpoint, {}, qs);
+  return sendRequest(api_endpoint, {}, qs, 'GET');
 }
 
 module.exports = {

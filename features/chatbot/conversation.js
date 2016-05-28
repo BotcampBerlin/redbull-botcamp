@@ -111,7 +111,9 @@ function loopThruMessaging(events) {
     const postback = event.postback;
     const sender = event.sender;
     if (!conversationsData[sender.id]) {
-      conversationsData[sender.id]['answerDelayActive'] = false;
+      conversationsData[sender.id] = {
+          answerDelayActive: false
+      }
     }
     if (event.delivery) {
       return;

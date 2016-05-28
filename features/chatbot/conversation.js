@@ -6,7 +6,7 @@ console.log(_.size(danielJson));
 let conversationsData = {};
 let base_url = 'https://graph.facebook.com/v2.6/'
 
-const ACCESS_TOKEN = 'EAADZAm3wsdkUBAM1jy5EOT5VZACZCymaFJJoxXAKe8D1WtWZCHVWlzRoF9ZBvnavOriztoYZBKljDaMSmWgfbQZBx64gFvNdKFXydBW5XtaZBC2sHKsEaQa9ZBjvaOKNM0nnpZA0gLonXrm7oW2tXJZB5SOxt7Ya6jzvVvrJWI8rs5bRQZDZD';
+const ACCESS_TOKEN = 'EAADZAuYIxHWYBAPErhOLZALYFaZAdgQbFZCWKBkeZBpCHhrluewZCZChFpy1TyahjdX0lVvTESkdsG6Vjs4vZCVVywPg7LpmPSBxmiTix2dZCwvNtf2RzItkZAhJZAEUVycb5nTtT3LL7tJotVq6mLWjpDblHDwCZAEqph8AvQrVPKbOegZDZD';
 
 function sendTextMessage(sender) {
   console.log('send message', sender)
@@ -15,6 +15,7 @@ function sendTextMessage(sender) {
   console.log(message);
   return sendMessage(sender, message);
 }
+
 
 function sendMessage(sender, message, api_endpoint) {
   if (typeof api_endpoint === 'undefined') {
@@ -56,9 +57,13 @@ function updateConversationData(sender) {
       idx: 0
     };
   } else {
+    console.log('conversationsData[sender.id].idx', conversationsData[sender.id].idx)
+    console.log('_.size(danielJson)', _.size(danielJson))
     if(conversationsData[sender.id].idx >= _.size(danielJson)) {
+      console.log('bigger')
       conversationsData[sender.id].idx = 0;
     } else {
+      console.log('increment');
       conversationsData[sender.id].idx = conversationsData[sender.id].idx++;
     }
   }

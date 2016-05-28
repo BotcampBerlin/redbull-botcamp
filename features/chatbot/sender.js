@@ -39,8 +39,8 @@ function sendSettingsMessage(message) {
 }
 
 function getUserData(user) {
-  api_endpoint = user
-  qs: {
+  var api_endpoint = user
+  var qs = {
     fields: "first_name"
   }
   return sendRequest(api_endpoint, {}, qs);

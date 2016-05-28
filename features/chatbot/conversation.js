@@ -15,15 +15,27 @@ function sendTextMessage(sender) {
   return sendMessage(sender, message);
 }
 
-function sendMessage(id, message) {
+function sendMessage(sender, message, api_endpoint) {
+  if (typeof api_endpoint === 'undefined') {
+    api_endpoint = 'me/messages';
+  }
+  var payload;
+  if (sender === null) {
+    payload = {
+      message
+    }
+  } else {
+    payload = {
+        recipient: sender,
+        message
+    }
+  }
   return request({
-      url: 'https://graph.facebook.com/v2.6/me/messages',
+      base_url: 'https://graph.facebook.com/v2.6/',
+      url: base_url + api_endpoint,
       qs: {access_token: ACCESS_TOKEN},
       method: 'POST',
-      json: {
-          recipient: sender,
-          message
-      }
+      json: payload
   })
     .then(response => {
       if (response.body.error) {

@@ -4,6 +4,7 @@ const _ = require('lodash');
 const danielJson = require('./daniel.json');
 console.log(_.size(danielJson));
 let conversationsData = {};
+let base_url = 'https://graph.facebook.com/v2.6/'
 
 const ACCESS_TOKEN = 'EAADZAm3wsdkUBAM1jy5EOT5VZACZCymaFJJoxXAKe8D1WtWZCHVWlzRoF9ZBvnavOriztoYZBKljDaMSmWgfbQZBx64gFvNdKFXydBW5XtaZBC2sHKsEaQa9ZBjvaOKNM0nnpZA0gLonXrm7oW2tXJZB5SOxt7Ya6jzvVvrJWI8rs5bRQZDZD';
 
@@ -31,7 +32,6 @@ function sendMessage(sender, message, api_endpoint) {
     }
   }
   return request({
-      base_url: 'https://graph.facebook.com/v2.6/',
       url: base_url + api_endpoint,
       qs: {access_token: ACCESS_TOKEN},
       method: 'POST',

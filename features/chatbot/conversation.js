@@ -4,6 +4,7 @@ const _ = require('lodash');
 const danielJson = require('./daniel.json');
 console.log(_.size(danielJson));
 let conversationsData = {};
+let base_url = 'https://graph.facebook.com/v2.6/'
 
 const ACCESS_TOKEN = 'EAADZAuYIxHWYBAPErhOLZALYFaZAdgQbFZCWKBkeZBpCHhrluewZCZChFpy1TyahjdX0lVvTESkdsG6Vjs4vZCVVywPg7LpmPSBxmiTix2dZCwvNtf2RzItkZAhJZAEUVycb5nTtT3LL7tJotVq6mLWjpDblHDwCZAEqph8AvQrVPKbOegZDZD';
 
@@ -16,15 +17,26 @@ function sendTextMessage(sender) {
 }
 
 
-function sendMessage(sender, message) {
+function sendMessage(sender, message, api_endpoint) {
+  if (typeof api_endpoint === 'undefined') {
+    api_endpoint = 'me/messages';
+  }
+  var payload;
+  if (sender === null) {
+    payload = {
+      message
+    }
+  } else {
+    payload = {
+        recipient: sender,
+        message
+    }
+  }
   return request({
-      url: 'https://graph.facebook.com/v2.6/me/messages',
+      url: base_url + api_endpoint,
       qs: {access_token: ACCESS_TOKEN},
       method: 'POST',
-      json: {
-          recipient: sender,
-          message
-      }
+      json: payload
   })
     .then(response => {
       if (response.body.error) {
@@ -57,8 +69,48 @@ function updateConversationData(sender) {
   }
 }
 
+function setGreetingMessage() {
+  const message = {
+      "setting_type":"call_to_actions",
+      "thread_state":"new_thread",
+      "call_to_actions": [
+        {
+          "message":{
+            "attachment":{
+              "type":"template",
+              "payload":{
+                "template_type":"generic",
+                "elements":[
+                  {
+                    "title":"Hello, I'm the Red Bull Wingbot!",
+                    "subtitle":"Chat with our Red Bull Racing drivers through me.",
+                    "buttons":[
+                      {
+                        "type":"postback",
+                        "title":"Daniel Riccardio",
+                        "payload": "daniel_riccardio"
+                      },
+                      {
+                        "type":"postback",
+                        "title":"Max Verstappen",
+                        "payload": "max_verstappen"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+    ]
+  }
+
+  sendMessage(null, message, 'redbullwingbot/thread_settings')
+}
+
 module.exports = {
   chat(entries) {
+    setGreetingMessage();
     console.log('foo', entries);
     const messagingEvents = _.head(entries).messaging;
     _.each(messagingEvents, event => {

@@ -3,6 +3,7 @@ const request = Promise.promisify(require('request'));
 
 const BASE_URL = 'https://graph.facebook.com/v2.6/'
 const ACCESS_TOKEN = 'EAADZAm3wsdkUBAM1jy5EOT5VZACZCymaFJJoxXAKe8D1WtWZCHVWlzRoF9ZBvnavOriztoYZBKljDaMSmWgfbQZBx64gFvNdKFXydBW5XtaZBC2sHKsEaQa9ZBjvaOKNM0nnpZA0gLonXrm7oW2tXJZB5SOxt7Ya6jzvVvrJWI8rs5bRQZDZD';
+const PAGE_ID = 'redbullwingbot';
 
 function sendMessage(sender, message, api_endpoint) {
   if (typeof api_endpoint === 'undefined') {
@@ -31,6 +32,10 @@ function sendMessage(sender, message, api_endpoint) {
     .catch(e => {
       console.log('Error sending messages: ', e)
     })
+}
+
+function sendSettingsMessage(message) {
+  return sendMessage(null, message, PAGE_ID + '/thread_settings');
 }
 
 module.exports = {

@@ -70,7 +70,7 @@ function setGreetingMessage() {
     ]
   }
 
-  Sender.sendMessage(null, message, 'redbullwingbot/thread_settings')
+  Sender.sendSettingsMessage(message);
 }
 
 setGreetingMessage();

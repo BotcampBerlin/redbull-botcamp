@@ -37,6 +37,28 @@ function updateConversationData(sender) {
   }
 }
 
+function askQuestion(sender, question_text, answers) {
+  answer_buttons = [];
+  _.forEach(answers, function (answer_object) {
+    answer_buttons.push({
+        "type":"postback",
+        "title": answers_object.title,
+        "payload": answers_object.payload
+    })
+  });
+  const message = {
+    "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"button",
+        "text": question_text
+        "buttons": answer_buttons
+      }
+    }
+  }
+  return Sender.sendMessage(sender, message)
+}
+
 function setGreetingMessage() {
   const message = {
       "setting_type":"call_to_actions",
@@ -73,7 +95,7 @@ function setGreetingMessage() {
     ]
   }
 
-  Sender.sendMessage(null, message, 'redbullwingbot/thread_settings')
+  Sender.sendSettingsMessage(message);
 }
 
 function determinePayloadAnswer(payload){

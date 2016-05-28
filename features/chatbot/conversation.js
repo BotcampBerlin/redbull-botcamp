@@ -28,7 +28,7 @@ function updateConversationData(sender) {
     };
   } else {
 
-    Sender.getUserData(sender.id).then(function (data) {
+    Sender.getUserData(sender.id).then(data => {
       console.log("User data: ", data);
       conversationsData[sender.id][first_name] = data.first_name;
     });
@@ -46,7 +46,7 @@ function updateConversationData(sender) {
 
 function askQuestion(sender, question_text, answers) {
   var answer_buttons = [];
-  _.forEach(answers, function (answer_object) {
+  _.forEach(answers, answer_object => {
     answer_buttons.push({
         "type":"postback",
         "title": answers_object.title,

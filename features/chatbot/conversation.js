@@ -112,7 +112,7 @@ function loopThruMessaging(events) {
     if (event.delivery) {
       return;
     }
-    if(postback) {
+    if(postback && !answerDelayActive) {
       const message = determinePayloadAnswer(postback.payload);
       return sendMessage(sender, message);
     }

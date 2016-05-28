@@ -35,6 +35,7 @@ function sendRequest(api_endpoint, payload, qs, method) {
     if (response.body.error) {
       console.log('Error: ', response.body.error)
     }
+    return response.body;
   })
   .catch(e => {
     console.log('Error sending messages: ', e)

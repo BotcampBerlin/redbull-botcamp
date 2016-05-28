@@ -34,8 +34,8 @@ module.exports = {
     const messagingEvents = _.head(entries).messaging;
     _.each(messagingEvents, event => {
       if (event.message && event.message.text) {
-          const text = event.message.text;
-          sendTextMessage(event.sender, "Text received, echo: " + text.substring(0, 200));
+        const text = event.message.text;
+        sendTextMessage(event.sender, "Text received, echo: " + text.substring(0, 200));
       }
     });
   }

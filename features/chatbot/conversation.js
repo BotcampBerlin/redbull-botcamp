@@ -94,6 +94,7 @@ function sendMessage(sender, message) {
     .then(() => {
       if(!message.waitForAnswer) {
         const newMessage = danielJson[conversationsData[sender.id].idx];
+        updateConversationData(sender);
         sendMessage(sender, newMessage);
       }
     });

@@ -18,6 +18,6 @@ app.use(bodyParser.json());
 
 app.use('/api', router);
 
-app.listen(appEnv.port, '0.0.0.0',()=> {
+app.listen(appEnv.port, '0.0.0.0', () => {
   console.log("server starting on " + appEnv.url);
 });

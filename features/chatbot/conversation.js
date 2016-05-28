@@ -2,6 +2,7 @@ const _ = require('lodash');
 const danielJson = require('./daniel.json');
 const answers = require('./answers.json');
 const Sender = require('./sender');
+let answerDelayActive = false;
 let conversationsData = {};
 
 function updateConversationData(sender) {
@@ -90,12 +91,16 @@ function determinePayloadAnswer(payload){
 }
 
 function sendMessage(sender, message) {
+  answerDelayActive = false;
   return Sender.sendMessage(sender, message.data)
     .then(() => {
       if(!message.waitForAnswer) {
-        const newMessage = danielJson[conversationsData[sender.id].idx];
-        updateConversationData(sender);
-        sendMessage(sender, newMessage);
+        answerDelayActive = true;
+        setTimeout(() => {
+          updateConversationData(sender);
+          const newMessage = danielJson[conversationsData[sender.id].idx];
+          sendMessage(sender, newMessage);
+        }, 8000)
       }
     });
 }
@@ -108,11 +113,14 @@ function loopThruMessaging(events) {
     const sender = event.sender;
     if(postback) {
       const message = determinePayloadAnswer(postback.payload);
+      return sendMessage(sender, message);
     }
-    if(message) {
-      const message = danielJson[conversationsData[sender.id].idx];
+    if(message && !answerDelayActive) {
       updateConversationData(sender);
-      return sendMessage(message);
+      const message = danielJson[conversationsData[sender.id].idx];
+      console.log('message!');
+      console.log(message);
+      return sendMessage(sender, message);
     }
   });
 }

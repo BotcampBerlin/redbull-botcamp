@@ -64,7 +64,47 @@ function updateConversationData(sender) {
   }
 }
 
+function setGreetingMessage() {
+  const message = {
+      "setting_type":"call_to_actions",
+      "thread_state":"new_thread",
+      "call_to_actions": [
+        {
+          "message":{
+            "attachment":{
+              "type":"template",
+              "payload":{
+                "template_type":"generic",
+                "elements":[
+                  {
+                    "title":"Hello, I'm the Red Bull Wingbot!",
+                    "subtitle":"Chat with our Red Bull Racing drivers through me.",
+                    "buttons":[
+                      {
+                        "type":"postback",
+                        "title":"Daniel Riccardio",
+                        "payload": "daniel_riccardio"
+                      },
+                      {
+                        "type":"postback",
+                        "title":"Max Verstappen",
+                        "payload": "max_verstappen"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+    ]
+  }
+
+  sendMessage(null, message, 'redbullwingbot/thread_settings')
+}
+
 module.exports = {
+  setGreetingMessage();
   chat(entries) {
     console.log('foo', entries);
     const messagingEvents = _.head(entries).messaging;

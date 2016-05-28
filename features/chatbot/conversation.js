@@ -2,11 +2,12 @@ const _ = require('lodash');
 const danielJson = require('./daniel.json');
 const answers = require('./answers.json');
 const Sender = require('./sender');
-let answerDelayActive = false;
-let conversationsData = {};
+let conversationsData = {
+  answerDelayActive: false
+};
 
 function updateConversationData(sender) {
-  console.log('update!', sender, answerDelayActive)
+  console.log('update!', sender, conversationsData[sender.id]['answerDelayActive'])
 
   console.log(sender.id, conversationsData[sender.id]);
   if(!conversationsData[sender.id]) {
@@ -18,7 +19,7 @@ function updateConversationData(sender) {
       console.log('bigger')
       conversationsData[sender.id].idx = 0;
     } else {
-      console.log('increment', conversationsData[sender.id].idx, answerDelayActive);
+      console.log('increment', conversationsData[sender.id].idx, conversationsData[sender.id]['answerDelayActive']);
       conversationsData[sender.id].idx = conversationsData[sender.id].idx + 1;
       console.log(conversationsData[sender.id].idx)
     }
@@ -88,17 +89,17 @@ function determinePayloadAnswer(payload){
 }
 
 function sendMessage(sender, message) {
-  console.log(message, answerDelayActive);
+  console.log(message, conversationsData[sender.id]['answerDelayActive']);
   return Sender.sendMessage(sender, message.data)
     .then(() => {
-      console.log(answerDelayActive);
-      answerDelayActive = false;
+      console.log(conversationsData[sender.id]['answerDelayActive']);
+      conversationsData[sender.id]['answerDelayActive'] = false;
       if(!message.waitForAnswer) {
-        answerDelayActive = true;
+        conversationsData[sender.id]['answerDelayActive'] = true;
         setTimeout(() => {
           updateConversationData(sender);
           const newMessage = danielJson[conversationsData[sender.id].idx];
-          console.log(conversationsData[sender.id].idx, newMessage, answerDelayActive)
+          console.log(conversationsData[sender.id].idx, newMessage, conversationsData[sender.id]['answerDelayActive'])
           sendMessage(sender, newMessage);
         }, 8000)
       }
@@ -107,18 +108,18 @@ function sendMessage(sender, message) {
 
 function loopThruMessaging(events) {
   _.each(events, event => {
-    console.log('bar', event, answerDelayActive);
+    console.log('bar', event, conversationsData[sender.id]['answerDelayActive']);
     const message = event.message;
     const postback = event.postback;
     const sender = event.sender;
     if (event.delivery) {
       return;
     }
-    if(postback && !answerDelayActive) {
+    if(postback && !conversationsData[sender.id]['answerDelayActive']) {
       const message = determinePayloadAnswer(postback.payload);
       return sendMessage(sender, message);
     }
-    if(message && !answerDelayActive) {
+    if(message && !conversationsData[sender.id]['answerDelayActive']) {
       updateConversationData(sender);
       const message = danielJson[conversationsData[sender.id].idx];
       console.log('message!');

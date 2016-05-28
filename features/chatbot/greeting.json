@@ -1,0 +1,12 @@
+{
+  "title": "Hello, I'm the Red Bull Wingbot!",
+  "subtitle": "Chat with our Red Bull Racing drivers through me.",
+  "buttons": [
+    {
+      "title": "Daniel Riccardio"
+    },
+    {
+      "title": "Max Verstappen"
+    }
+  ]
+}

@@ -30,12 +30,12 @@
   },
    {  
     "data":{
-        "attachment": {
-          "type":"image",
-          "payload":{
-            "url":"https://dl.dropboxusercontent.com/u/1552364/daniel_ricciardo_profile.jpg"
-          }
+      "attachment": {
+        "type":"image",
+        "payload":{
+          "url":"https://dl.dropboxusercontent.com/u/1552364/daniel_ricciardo_profile.jpg"
         }
+      }
     }
    },
   {

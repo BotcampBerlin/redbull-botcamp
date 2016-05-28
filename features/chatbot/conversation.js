@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const request = Promise.promisify(require('request'));
 const _ = require('lodash');
 const danielJson = require('./daniel.json');
-console.log(danielJson);
+console.log(_.size(danielJson));
 let conversationsData = {};
 
 const ACCESS_TOKEN = 'EAADZAm3wsdkUBAM1jy5EOT5VZACZCymaFJJoxXAKe8D1WtWZCHVWlzRoF9ZBvnavOriztoYZBKljDaMSmWgfbQZBx64gFvNdKFXydBW5XtaZBC2sHKsEaQa9ZBjvaOKNM0nnpZA0gLonXrm7oW2tXJZB5SOxt7Ya6jzvVvrJWI8rs5bRQZDZD';
@@ -32,12 +32,12 @@ function sendTextMessage(sender) {
 }
 
 function updateConversationData(sender) {
-  console.log('update!')
+  console.log('update!', sender)
 
   console.log(sender.id, conversationsData[sender.id]);
   if(!conversationsData[sender.id]) {
     conversationsData[sender.id] = {
-      idx: 1
+      idx: 0
     };
   } else {
     if(conversationsData[sender.id].idx >= _.size(danielJson)) {
@@ -54,7 +54,7 @@ module.exports = {
     _.each(messagingEvents, event => {
       const message = event.message;
       if (message) {
-        console.log('message fine')
+        console.log('message fine', event.sender)
         updateConversationData(event.sender);
         sendTextMessage(event.sender);
       }

@@ -14,7 +14,7 @@ function updateConversationData(sender) {
       idx: 0
     };
   } else {
-    if(conversationsData[sender.id].idx >= _.size(danielJson)) {
+    if(conversationsData[sender.id].idx >= _.size(danielJson) - 1) {
       console.log('bigger')
       conversationsData[sender.id].idx = 0;
     } else {

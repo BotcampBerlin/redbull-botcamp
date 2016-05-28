@@ -12,7 +12,7 @@ function sendTextMessage(sender) {
   const idx = conversationsData[sender.id].idx;
   const message = danielJson[idx];
   console.log(message);
-  return sendMessage(id, message);
+  return sendMessage(sender, message);
 }
 
 function sendMessage(id, message) {

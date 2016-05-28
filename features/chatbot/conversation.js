@@ -85,7 +85,7 @@ module.exports = {
       if (message) {
         console.log('message fine', event.sender)
         updateConversationData(event.sender);
-        Sender.sendTextMessage(event.sender);
+        sendTextMessage(event.sender);
       }
     });
   }

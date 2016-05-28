@@ -38,7 +38,7 @@ function updateConversationData(sender) {
 }
 
 function askQuestion(sender, question_text, answers) {
-  answer_buttons = [];
+  var answer_buttons = [];
   _.forEach(answers, function (answer_object) {
     answer_buttons.push({
         "type":"postback",
@@ -51,7 +51,7 @@ function askQuestion(sender, question_text, answers) {
       "type":"template",
       "payload":{
         "template_type":"button",
-        "text": question_text
+        "text": question_text,
         "buttons": answer_buttons
       }
     }

@@ -5,11 +5,11 @@
 
 // call the packages we need
 const express    = require('express');        // call express
-const cfenv = require('cfenv');
+const cfenv      = require('cfenv');
 const app        = express();                 // define our app using express
 const bodyParser = require('body-parser');
-const routes = require('./routes');
-const features = require('./features');
+const routes     = require('./routes');
+const features   = require('./features');
 
 
 const appEnv = cfenv.getAppEnv();

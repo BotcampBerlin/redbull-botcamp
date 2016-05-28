@@ -1,0 +1,68 @@
+[
+	{
+		"text": "Hi Samuel! Back for more? ;)"
+	},
+	{
+		"attachment": {
+      "type": "template",
+      "payload": {
+        "template_type":"button",
+        "text":"Remeber, if you can find and talk to all of our Red Bull F1 race team members, you can win VIP-access to the Monaco Coctail Club 2016!",
+        "buttons":[
+          {
+            "type":"postback",
+            "title":"Great, let's chat with Max!",
+            "payload": "talk"
+          },
+          {
+            "type":"postback",
+            "title":"Nah, I'll pass",
+            "payload":"no_talking"
+          }
+        ]
+      }
+    }
+	},
+	{
+		"text": "Hello! My name is Max Verstappen."
+	},
+	{
+		"text": "https://dl.dropboxusercontent.com/u/1552364/max-verstappen.mp4"
+	},
+	{
+		"text": "I was born in Hasselt, Belgium and I have been driving ever since I was 6 years old. Is this your first time at the races? "
+	},
+	{
+		"text": "I always enjoy racing street circuits like Monaco because you are really pushing the limit and are very close to the walls." 
+	},
+	{
+		"text": "To prepare for this year, I took part in the Red Bull Soapbox Race. http://www.redbull.com/en/motorsports/f1/stories/1331724434998/max-verstappen-red-bull-soapbox"
+	},
+	{
+		"text": "How did I do in your opinion?"
+	},
+	{
+		"text": "Samuel, you have done now all it takes to be part of the lottery of VIP-access to the Monaco Coctail Club 2016! Please give me your email address and I'll let you know the winner at 21:00."
+	},
+    {
+        "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type":"button",
+        "text":"And by the way, if you want I can keep on telling you some stuff about the event, like lap times and who is on the lead.",
+        "buttons":[
+          {
+            "type":"postback",
+            "title":"Keep it coming! ",
+            "payload": "talk"
+          },
+          {
+            "type":"postback",
+            "title":"Nah, I'll pass",
+            "payload":"no_talking"
+          }
+        ]
+      }
+    }
+    },
+]

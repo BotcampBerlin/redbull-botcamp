@@ -1,23 +1,37 @@
 {
   "daniel_riccardio": {
-    "text": "Hi Samuel! I'm Red Bull Chatbot and I can connet you to talk with our great athletes."
+    "data": {
+      "text": "Hi Samuel! I'm Red Bull Chatbot and I can connet you to talk with our great athletes."
+    }
   },
   "max_verstappen": {
-    "text": "Hello! My name is Max Verstappen."
+    "data": {
+      "text": "Hello! My name is Max Verstappen."
+    }
   },
   "talk_with_max": {
-    "text":  "Nice to talk with you, I'm max"
+    "data": {
+      "text":  "Nice to talk with you, I'm max"
+    }
   },
   "talk_with_daniel": {
-    "text": "Hey mate! Great to see you here in Monaco! I'm Daniel Ricciardo, but you can call me Dan."
+    "data": {
+      "text": "Hey mate! Great to see you here in Monaco! I'm Daniel Ricciardo, but you can call me Dan."
+    }
   },
   "finland": {
-    "text": "They're all hillbillies!"
+    "data": {
+      "text": "They're all hillbillies!"
+    }
   },
   "sweden": {
-    "text": "I hate those Swedes!"
+    "data": {
+      "text": "I hate those Swedes!"
+    }
   },
   "monaco": {
-    "text": "I'm myself quite a fan of Monaco. I believe street circuits bring out the best in a driver. It’s visible to the spectators who is running the fine line between risk and reward." 
+    "data": {
+      "text": "I'm myself quite a fan of Monaco. I believe street circuits bring out the best in a driver. It’s visible to the spectators who is running the fine line between risk and reward." 
+    }
   }
 }

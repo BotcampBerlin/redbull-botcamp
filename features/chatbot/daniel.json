@@ -1,85 +1,116 @@
 [
-	{
-		"text": "If you find and talk to all four of our Red Bull F1 race team members, you can win VIP access to the Monaco Cocktail Club 2016!"
-	},
-	{
-		"attachment": {
-      "type": "template",
-      "payload": {
-        "template_type":"button",
-        "text":"So, you wan't to talk with Daniel Ricciardo, our Red Bull F1 race team member?",
-        "buttons":[
-          {
-            "type":"postback",
-            "title":"Of course",
-            "payload": "talk_with_daniel"
-          },
-          {
-            "type":"postback",
-            "title":"Nah, I'll pass.",
-            "payload":"no_talking"
-          }
-        ]
-      }
-    }
-	},
-   {
-        "text": "<Profile pic of Ricciardo>"
-   },
-	{
-		"text": "Hey mate! Great to see you here in Monaco! I'm Daniel Ricciardo, but you can call me Dan."
-	},
-	{
-		"text": "https://dl.dropboxusercontent.com/u/1552364/daniel-ricciardo.mp4"
-	},
-	{
-		"text": "I'm originally from Perth, Western Australia, but currently I live here in Monaco."
-	},
-	{
-		"text": "I remember in 2014 when I got to the podium in Monaco I came back to my house with the trophy and champagne and sat there thinking I just had an F1 race an hour ago and now I’m sat in my house, this is weird."
-	},
-	{
-		"attachment": {
-      "type": "template",
-      "payload": {
-        "template_type":"button",
-        "text":"Where do you live?",
-        "buttons":[
-          {
-            "type":"postback",
-            "title":"Finland",
-            "payload": "finland"
-          },
-          {
-            "type":"postback",
-            "title":"Monaco",
-            "payload":"monaco"
-          },
-          {
-            "type":"postback",
-            "title":"Sweden",
-            "payload":"sweden"
-          }
-        ]
-      }
-    }
-	},
   {
-    "text": "You traveled all the way here? You are a true fan of F1! How do you like the track here?"
+    "data": {
+      "text": "If you find and talk to all four of our Red Bull F1 race team members, you can win VIP access to the Monaco Cocktail Club 2016!"
+    }
   },
-	{
-		"text": "I'm myself quite a fan of Monaco. I believe street circuits bring out the best in a driver. It’s visible to the spectators who is running the fine line between risk and reward."
-	},
-	{
-		"text": "To get me going for this race, I did a challenge with Bath rugby team, check this out!"
-	},
-	{
-		"text": "<video placeholder>"
-	},
-	{
-		"text": "I was so sure I could push those guys out of my way!"
-	},
-	{
-		"text": "Now I have to get going, but it was great chatting with you Samuel. Wave for me when I drive by. :)"
-	}
+  {
+    "data": {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type":"button",
+          "text":"So, you wan't to talk with Daniel Ricciardo, our Red Bull F1 race team member?",
+          "buttons":[
+            {
+              "type":"postback",
+              "title":"Of course",
+              "payload": "talk_with_daniel"
+            },
+            {
+              "type":"postback",
+              "title":"Nah, I'll pass.",
+              "payload":"no_talking"
+            }
+          ]
+        }
+      }
+    },
+    "waitForAnswer": true
+  },
+   {  
+    "data":{
+        "text": "<Profile pic of Ricciardo>"
+    }
+   },
+  {
+    "data": {
+      "text": "Hey mate! Great to see you here in Monaco! I'm Daniel Ricciardo, but you can call me Dan."
+    }
+  },
+  {
+    "data": {
+      "text": "https://dl.dropboxusercontent.com/u/1552364/daniel-ricciardo.mp4"
+    }
+  },
+  {
+    "data": {
+      "text": "I'm originally from Perth, Western Australia, but currently I live here in Monaco."
+    }
+  },
+  {
+    "data": {
+      "text": "I remember in 2014 when I got to the podium in Monaco I came back to my house with the trophy and champagne and sat there thinking I just had an F1 race an hour ago and now I’m sat in my house, this is weird."
+    }
+  },
+  {
+    "data": {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type":"button",
+          "text":"Where do you live?",
+          "buttons":[
+            {
+              "type":"postback",
+              "title":"Finland",
+              "payload": "finland"
+            },
+            {
+              "type":"postback",
+              "title":"Monaco",
+              "payload":"monaco"
+            },
+            {
+              "type":"postback",
+              "title":"Sweden",
+              "payload":"sweden"
+            }
+          ]
+        }
+      }
+    },
+    "waitForAnswer": true
+  },
+  {
+    "data": {
+      "text": "You traveled all the way here? You are a true fan of F1! How do you like the track here?"
+    },
+    "waitForAnswer": true
+  },
+  {
+    "data": {
+      "text": "I'm myself quite a fan of Monaco. I believe street circuits bring out the best in a driver. It’s visible to the spectators who is running the fine line between risk and reward."
+    }
+  },
+  {
+    "data": {
+      "text": "To get me going for this race, I did a challenge with Bath rugby team, check this out!"
+    }
+  },
+  {
+    "data": {
+      "text": "<video placeholder>"
+    }
+  },
+  {
+    "data": {
+      "text": "I was so sure I could push those guys out of my way!"
+    }
+  },
+  {
+    "data": {
+      "text": "Now I have to get going, but it was great chatting with you Samuel. Wave for me when I drive by. :)"
+    }
+  }
 ]

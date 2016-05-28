@@ -4,19 +4,6 @@ const answers = require('./answers.json');
 const Sender = require('./sender');
 let conversationsData = {};
 
-function sendTextMessage(sender, options) {
-  console.log('send message', sender);
-  const { answer, delayedMessage } = options;
-  let message;
-  if(!answer) {
-    message = danielJson[conversationsData[sender.id].idx];
-    return Sender.sendMessage(sender, message);
-  } else {
-    message = answer;
-    return Sender.sendMessage(sender, message);
-  }
-}
-
 function updateConversationData(sender) {
   console.log('update!', sender)
 
@@ -109,18 +96,30 @@ function determinePayloadAnswer(payload){
   return answers[payload];
 }
 
+function sendMessage(sender, message) {
+  return Sender.sendMessage(sender, message.data)
+    .then(() => {
+      if(!message.waitForAnswer) {
+        const newMessage = danielJson[conversationsData[sender.id].idx];
+        sendMessage(sender, newMessage);
+      }
+    });
+}
+
 function loopThruMessaging(events) {
   _.each(events, event => {
     console.log('bar', event);
     const message = event.message;
     const postback = event.postback;
+    const sender = event.sender;
     if(postback) {
-      const answer = determinePayloadAnswer(postback.payload);
-      return sendTextMessage(event.sender, { answer });
+      const message = determinePayloadAnswer(postback.payload);
+      return sendMessage(sender, message);
     }
     if(message) {
-      updateConversationData(event.sender);
-      return sendTextMessage(event.sender);
+      const message = danielJson[conversationsData[sender.id].idx];
+      updateConversationData(sender);
+      return sendMessage(message);
     }
   });
 }

@@ -23,9 +23,16 @@ function updateConversationData(sender) {
   console.log(sender.id, conversationsData[sender.id]);
   if(!conversationsData[sender.id]) {
     conversationsData[sender.id] = {
-      idx: 0
+      idx: 0,
+      first_name: "<placeholder>"
     };
   } else {
+
+    Sender.getUserData(sender.id).then(function (data) {
+      console.log("User data: ", data);
+      conversationsData[sender.id][first_name] = data.first_name;
+    });
+
     if(conversationsData[sender.id].idx >= _.size(danielJson)) {
       console.log('bigger')
       conversationsData[sender.id].idx = 0;

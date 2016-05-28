@@ -39,7 +39,16 @@ function sendSettingsMessage(message) {
   return sendRequest(PAGE_ID + '/thread_settings', message, {});
 }
 
+function getUserData(user) {
+  api_endpoint = user
+  qs: {
+    fields: "first_name"
+  }
+  return sendRequest(api_endpoint, {}, qs);
+}
+
 module.exports = {
   sendMessage,
   sendSettingsMessage,
+  getUserData
 }

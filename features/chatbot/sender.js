@@ -5,9 +5,9 @@ const BASE_URL = 'https://graph.facebook.com/v2.6/'
 const ACCESS_TOKEN = 'EAADZAm3wsdkUBAM1jy5EOT5VZACZCymaFJJoxXAKe8D1WtWZCHVWlzRoF9ZBvnavOriztoYZBKljDaMSmWgfbQZBx64gFvNdKFXydBW5XtaZBC2sHKsEaQa9ZBjvaOKNM0nnpZA0gLonXrm7oW2tXJZB5SOxt7Ya6jzvVvrJWI8rs5bRQZDZD';
 const PAGE_ID = 'redbullwingbot';
 
-function sendMessage(sender, message, api_endpoint) {
-  var api_endpoint = 'me/messages';
-  var payload = {
+function sendMessage(sender, message) {
+  let api_endpoint = 'me/messages';
+  let payload = {
     recipient: sender,
     message
   }
@@ -31,7 +31,6 @@ function sendRequest(api_endpoint, payload, qs, method) {
     json: payload
   })
   .then(response => {
-    console.log(response.request.uri);
     if (response.body.error) {
       console.log('Error: ', response.body.error)
     }
@@ -47,8 +46,8 @@ function sendSettingsMessage(message) {
 }
 
 function getUserData(user) {
-  var api_endpoint = user
-  var qs = {
+  let api_endpoint = user
+  let qs = {
     fields: "first_name"
   }
   return sendRequest(api_endpoint, {}, qs, 'GET');

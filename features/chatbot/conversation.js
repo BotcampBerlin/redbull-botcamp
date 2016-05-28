@@ -26,14 +26,7 @@ function updateConversationData(sender) {
 }
 
 function askQuestion(sender, question_text, answers) {
-  var answer_buttons = [];
-  _.forEach(answers, answer_object => {
-    answer_buttons.push({
-        "type":"postback",
-        "title": answers_object.title,
-        "payload": answers_object.payload
-    })
-  });
+
   const message = {
     "attachment":{
       "type":"template",
@@ -47,7 +40,22 @@ function askQuestion(sender, question_text, answers) {
   return Sender.sendMessage(sender, message)
 }
 
+function createButtons(buttons) {
+  return _.map(buttons, elem => {
+    if (typeof elem.payload === 'undefined') {
+      elem.payload = elem.title.toLowerCase().replace('/ /', '_');
+    }
+    return {
+        "type":"postback",
+        "title": elem.title,
+        "payload": elem.payload
+    };
+  });
+}
+
 function setGreetingMessage() {
+  const greeting = require("./greeting.json");
+  let buttons = createButtons(greeting.buttons);
   const message = {
       "setting_type":"call_to_actions",
       "thread_state":"new_thread",
@@ -60,20 +68,9 @@ function setGreetingMessage() {
                 "template_type":"generic",
                 "elements":[
                   {
-                    "title":"Hello, I'm the Red Bull Wingbot!",
-                    "subtitle":"Chat with our Red Bull Racing drivers through me.",
-                    "buttons":[
-                      {
-                        "type":"postback",
-                        "title":"Daniel Riccardio",
-                        "payload": "daniel_riccardio"
-                      },
-                      {
-                        "type":"postback",
-                        "title":"Max Verstappen",
-                        "payload": "max_verstappen"
-                      }
-                    ]
+                    "title": greeting.title,
+                    "subtitle": greeting.subtitle,
+                    "buttons": buttons
                   }
                 ]
               }

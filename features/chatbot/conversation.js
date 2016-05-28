@@ -88,9 +88,9 @@ function determinePayloadAnswer(payload){
 }
 
 function sendMessage(sender, message) {
-  answerDelayActive = false;
   return Sender.sendMessage(sender, message.data)
     .then(() => {
+      answerDelayActive = false;
       if(!message.waitForAnswer) {
         answerDelayActive = true;
         setTimeout(() => {

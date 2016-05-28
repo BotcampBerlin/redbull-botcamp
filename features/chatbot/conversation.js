@@ -1,51 +1,15 @@
-const Promise = require('bluebird');
-const request = Promise.promisify(require('request'));
 const _ = require('lodash');
 const danielJson = require('./daniel.json');
 console.log(_.size(danielJson));
 let conversationsData = {};
-let base_url = 'https://graph.facebook.com/v2.6/'
-
-const ACCESS_TOKEN = 'EAADZAuYIxHWYBAPErhOLZALYFaZAdgQbFZCWKBkeZBpCHhrluewZCZChFpy1TyahjdX0lVvTESkdsG6Vjs4vZCVVywPg7LpmPSBxmiTix2dZCwvNtf2RzItkZAhJZAEUVycb5nTtT3LL7tJotVq6mLWjpDblHDwCZAEqph8AvQrVPKbOegZDZD';
+const Sender = require('./sender');
 
 function sendTextMessage(sender) {
   console.log('send message', sender)
   const idx = conversationsData[sender.id].idx;
   const message = danielJson[idx];
   console.log(message);
-  return sendMessage(sender, message);
-}
-
-
-function sendMessage(sender, message, api_endpoint) {
-  if (typeof api_endpoint === 'undefined') {
-    api_endpoint = 'me/messages';
-  }
-  var payload;
-  if (sender === null) {
-    payload = {
-      message
-    }
-  } else {
-    payload = {
-        recipient: sender,
-        message
-    }
-  }
-  return request({
-      url: base_url + api_endpoint,
-      qs: {access_token: ACCESS_TOKEN},
-      method: 'POST',
-      json: payload
-  })
-    .then(response => {
-      if (response.body.error) {
-        console.log('Error: ', response.body.error)
-      }
-    })
-    .catch(e => {
-      console.log('Error sending messages: ', e)
-    })
+  return Sender.sendMessage(sender, message);
 }
 
 function updateConversationData(sender) {
@@ -105,12 +69,13 @@ function setGreetingMessage() {
     ]
   }
 
-  sendMessage(null, message, 'redbullwingbot/thread_settings')
+  Sender.sendMessage(null, message, 'redbullwingbot/thread_settings')
 }
+
+setGreetingMessage();
 
 module.exports = {
   chat(entries) {
-    setGreetingMessage();
     console.log('foo', entries);
     const messagingEvents = _.head(entries).messaging;
     _.each(messagingEvents, event => {
@@ -119,7 +84,7 @@ module.exports = {
       if (message) {
         console.log('message fine', event.sender)
         updateConversationData(event.sender);
-        sendTextMessage(event.sender);
+        Sender.sendTextMessage(event.sender);
       }
     });
   }

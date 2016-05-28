@@ -31,6 +31,7 @@ function sendRequest(api_endpoint, payload, qs, method) {
     json: payload
   })
   .then(response => {
+    console.log(response.request.uri);
     if (response.body.error) {
       console.log('Error: ', response.body.error)
     }

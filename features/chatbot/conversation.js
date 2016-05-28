@@ -43,7 +43,7 @@ function askQuestion(sender, question_text, answers) {
 function createButtons(buttons) {
   return _.map(buttons, elem => {
     if (typeof elem.payload === 'undefined') {
-      elem.payload = elem.title.toLowerCase().replace('/ /', '_');
+      elem.payload = elem.title.toLowerCase().replace(/ /, '_');
     }
     return {
         "type":"postback",

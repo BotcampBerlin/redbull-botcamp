@@ -2,9 +2,7 @@ const _ = require('lodash');
 const danielJson = require('./daniel.json');
 const answers = require('./answers.json');
 const Sender = require('./sender');
-let conversationsData = {
-  answerDelayActive: false
-};
+let conversationsData = {};
 
 function updateConversationData(sender) {
   console.log('update!', sender, conversationsData[sender.id]['answerDelayActive'])
@@ -108,10 +106,11 @@ function sendMessage(sender, message) {
 
 function loopThruMessaging(events) {
   _.each(events, event => {
-    console.log('bar', event, conversationsData[sender.id]['answerDelayActive']);
+    console.log('bar', event);
     const message = event.message;
     const postback = event.postback;
     const sender = event.sender;
+    console.log(conversationsData[sender.id]['answerDelayActive']);
     if (event.delivery) {
       return;
     }

@@ -104,8 +104,8 @@ function setGreetingMessage() {
 }
 
 module.exports = {
-  setGreetingMessage();
   chat(entries) {
+    setGreetingMessage();
     console.log('foo', entries);
     const messagingEvents = _.head(entries).messaging;
     _.each(messagingEvents, event => {

@@ -1,20 +1,20 @@
 const _ = require('lodash');
 const danielJson = require('./daniel.json');
 const answers = require('./answers.json');
-let conversationsData = {};
 const Sender = require('./sender');
+let conversationsData = {};
 
-function sendTextMessage(sender, givenMessage) {
+function sendTextMessage(sender, options) {
   console.log('send message', sender);
+  const { answer, delayedMessage } = options;
   let message;
-  if(!givenMessage) {
+  if(!answer) {
     message = danielJson[conversationsData[sender.id].idx];
+    return Sender.sendMessage(sender, message);
   } else {
-    message = givenMessage;
+    message = answer;
+    return Sender.sendMessage(sender, message);
   }
-  console.log('message');
-  console.log(message);
-  return Sender.sendMessage(sender, message);
 }
 
 function updateConversationData(sender) {
@@ -102,24 +102,28 @@ function determinePayloadAnswer(payload){
   return answers[payload];
 }
 
+function loopThruMessaging(events) {
+  _.each(events, event => {
+    console.log('bar', event);
+    const message = event.message;
+    const postback = event.postback;
+    if(postback) {
+      const answer = determinePayloadAnswer(postback.payload);
+      return sendTextMessage(event.sender, { answer });
+    }
+    if(message) {
+      updateConversationData(event.sender);
+      return sendTextMessage(event.sender);
+    }
+  });
+}
+
 setGreetingMessage();
 
 module.exports = {
   chat(entries) {
     console.log('foo', entries);
     const messagingEvents = _.head(entries).messaging;
-    _.each(messagingEvents, event => {
-      console.log('bar', event);
-      const message = event.message;
-      const postback = event.postback;
-      if(postback) {
-        const answer = determinePayloadAnswer(postback.payload);
-        return sendTextMessage(event.sender, answer);
-      }
-      if(message) {
-        updateConversationData(event.sender);
-        return sendTextMessage(event.sender);
-      }
-    });
+    return loopThruMessaging(messagingEvents);
   }
 }

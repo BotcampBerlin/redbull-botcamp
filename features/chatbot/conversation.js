@@ -6,7 +6,7 @@ let answerDelayActive = false;
 let conversationsData = {};
 
 function updateConversationData(sender) {
-  console.log('update!', sender)
+  console.log('update!', sender, answerDelayActive)
 
   console.log(sender.id, conversationsData[sender.id]);
   if(!conversationsData[sender.id]) {
@@ -18,7 +18,7 @@ function updateConversationData(sender) {
       console.log('bigger')
       conversationsData[sender.id].idx = 0;
     } else {
-      console.log('increment', conversationsData[sender.id].idx);
+      console.log('increment', conversationsData[sender.id].idx, answerDelayActive);
       conversationsData[sender.id].idx = conversationsData[sender.id].idx + 1;
       console.log(conversationsData[sender.id].idx)
     }
@@ -88,15 +88,17 @@ function determinePayloadAnswer(payload){
 }
 
 function sendMessage(sender, message) {
+  console.log(message, answerDelayActive);
   return Sender.sendMessage(sender, message.data)
     .then(() => {
+      console.log(answerDelayActive);
       answerDelayActive = false;
       if(!message.waitForAnswer) {
         answerDelayActive = true;
         setTimeout(() => {
           updateConversationData(sender);
           const newMessage = danielJson[conversationsData[sender.id].idx];
-          console.log(conversationsData[sender.id].idx, newMessage)
+          console.log(conversationsData[sender.id].idx, newMessage, answerDelayActive)
           sendMessage(sender, newMessage);
         }, 8000)
       }
@@ -105,7 +107,7 @@ function sendMessage(sender, message) {
 
 function loopThruMessaging(events) {
   _.each(events, event => {
-    console.log('bar', event);
+    console.log('bar', event, answerDelayActive);
     const message = event.message;
     const postback = event.postback;
     const sender = event.sender;
@@ -130,7 +132,6 @@ setGreetingMessage();
 
 module.exports = {
   chat(entries) {
-    console.log('foo', entries);
     const messagingEvents = _.head(entries).messaging;
     return loopThruMessaging(messagingEvents);
   }

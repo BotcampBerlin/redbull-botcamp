@@ -96,6 +96,7 @@ function sendMessage(sender, message) {
         setTimeout(() => {
           updateConversationData(sender);
           const newMessage = danielJson[conversationsData[sender.id].idx];
+          console.log(conversationsData[sender.id].idx, newMessage)
           sendMessage(sender, newMessage);
         }, 8000)
       }
@@ -108,6 +109,9 @@ function loopThruMessaging(events) {
     const message = event.message;
     const postback = event.postback;
     const sender = event.sender;
+    if (event.delivery) {
+      return;
+    }
     if(postback) {
       const message = determinePayloadAnswer(postback.payload);
       return sendMessage(sender, message);

@@ -1,9 +1,9 @@
 [
 	{
-		"text": "Hi Samuel! I'm Red Bull Chatbot and I can connet you to talk with our great athletes."
+		"text": "Hi Samuel! I'm Red Bull Chatbot and I can connect you to talk with our awesome athletes."
 	},
 	{
-		"text": "Remeber, if you can find and talk to all of our Red Bull F1 race team members, you can win VIP-access to the Monaco Coctail Club 2016!"
+		"text": "If you find and talk to all four of our Red Bull F1 race team members, you can win VIP access to the Monaco Cocktail Club 2016!"
 	},
 	{
 		"attachment": {
@@ -14,7 +14,7 @@
         "buttons":[
           {
             "type":"postback",
-            "title":"Of course",
+            "title":"Of course!",
             "payload": "talk"
           },
           {
@@ -26,6 +26,9 @@
       }
     }
 	},
+   {
+        "text": "<Profile pic of Ricciardo>"
+   },
 	{
 		"text": "Hey mate! Great to see you here in Monaco! I'm Daniel Ricciardo, but you can call me Dan."
 	},
@@ -33,17 +36,18 @@
 		"text": "https://dl.dropboxusercontent.com/u/1552364/daniel-ricciardo.mp4"
 	},
 	{
-		"text": "I'm originally from Perth, Western Australia, but currently I live in Monaco."
+		"text": "I'm originally from Perth, Western Australia, but currently I live here in Monaco."
 	},
 	{
-		"text": "I remember in 2014 when I got the podium in Monaco I came back to my house with the trophy and champagne and sat there thinking I just had an F1 race an hour ago and now I’m sat in my house, this is weird."
+		"text": "I remember in 2014 when I got to the podium in Monaco I came back to my house with the trophy and champagne and sat there thinking I just
+      had an F1 race an hour ago and now I’m sat in my house, this is weird."
 	},
 	{
 		"attachment": {
       "type": "template",
       "payload": {
         "template_type":"button",
-        "text":"What country are you from?",
+        "text":"Where do you live?",
         "buttons":[
           {
             "type":"postback",
@@ -64,19 +68,22 @@
       }
     }
 	},
+  {
+    "text": "You traveled all the way here? You are a true fan of F1! How do you like the track here?"
+  },
 	{
-		"text": "I'm myself quite a fan of Monaco. I believe street circuits bring out the best in a driver. It’s visible to the spectators who is running the fine line between risk and reward." 
+		"text": "I'm myself quite a fan of Monaco. I believe street circuits bring out the best in a driver. It’s visible to the spectators who is running the fine line between risk and reward."
 	},
 	{
 		"text": "To get me going for this race, I did a challenge with Bath rugby team, check this out!"
 	},
 	{
-		"text": "<video palceholder>"
+		"text": "<video placeholder>"
 	},
 	{
-		"text": "What do you think?"
+		"text": "I was so sure I could push those guys out of my way!"
 	},
 	{
-		"text": "Now I have to get going, but it was great chatting with you Samuel. Wave for me when I drive by."
+		"text": "Now I have to get going, but it was great chatting with you Samuel. Wave for me when I drive by. :)"
 	}
 ]

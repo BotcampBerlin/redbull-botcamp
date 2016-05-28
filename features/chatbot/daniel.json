@@ -1,8 +1,5 @@
 [
 	{
-		"text": "Hi Samuel! I'm Red Bull Chatbot and I can connet you to talk with our great athletes."
-	},
-	{
 		"text": "Remeber, if you can find and talk to all of our Red Bull F1 race team members, you can win VIP-access to the Monaco Coctail Club 2016!"
 	},
 	{
@@ -15,7 +12,7 @@
           {
             "type":"postback",
             "title":"Of course",
-            "payload": "talk"
+            "payload": "talk_with_daniel"
           },
           {
             "type":"postback",
@@ -25,9 +22,6 @@
         ]
       }
     }
-	},
-	{
-		"text": "Hey mate! Great to see you here in Monaco! I'm Daniel Ricciardo, but you can call me Dan."
 	},
 	{
 		"text": "https://dl.dropboxusercontent.com/u/1552364/daniel-ricciardo.mp4"
@@ -63,9 +57,6 @@
         ]
       }
     }
-	},
-	{
-		"text": "I'm myself quite a fan of Monaco. I believe street circuits bring out the best in a driver. It’s visible to the spectators who is running the fine line between risk and reward." 
 	},
 	{
 		"text": "To get me going for this race, I did a challenge with Bath rugby team, check this out!"

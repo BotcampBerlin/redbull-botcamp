@@ -24,9 +24,6 @@
     }
 	},
 	{
-		"text": "Hello! My name is Max Verstappen."
-	},
-	{
 		"text": "https://dl.dropboxusercontent.com/u/1552364/max-verstappen.mp4"
 	},
 	{
@@ -54,7 +51,7 @@
           {
             "type":"postback",
             "title":"Keep it coming! ",
-            "payload": "talk"
+            "payload": "talk_with_max"
           },
           {
             "type":"postback",

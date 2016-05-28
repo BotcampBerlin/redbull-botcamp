@@ -1,13 +1,18 @@
 const _ = require('lodash');
 const danielJson = require('./daniel.json');
-console.log(_.size(danielJson));
+const answers = require('./answers.json');
 let conversationsData = {};
 const Sender = require('./sender');
 
-function sendTextMessage(sender) {
-  console.log('send message', sender)
-  const idx = conversationsData[sender.id].idx;
-  const message = danielJson[idx];
+function sendTextMessage(sender, givenMessage) {
+  console.log('send message', sender);
+  let message;
+  if(!givenMessage) {
+    message = danielJson[conversationsData[sender.id].idx];
+  } else {
+    message = givenMessage;
+  }
+  console.log('message');
   console.log(message);
   return Sender.sendMessage(sender, message);
 }
@@ -21,8 +26,6 @@ function updateConversationData(sender) {
       idx: 0
     };
   } else {
-    console.log('conversationsData[sender.id].idx', conversationsData[sender.id].idx)
-    console.log('_.size(danielJson)', _.size(danielJson))
     if(conversationsData[sender.id].idx >= _.size(danielJson)) {
       console.log('bigger')
       conversationsData[sender.id].idx = 0;
@@ -73,6 +76,10 @@ function setGreetingMessage() {
   Sender.sendMessage(null, message, 'redbullwingbot/thread_settings')
 }
 
+function determinePayloadAnswer(payload){
+  return answers[payload];
+}
+
 setGreetingMessage();
 
 module.exports = {
@@ -82,10 +89,14 @@ module.exports = {
     _.each(messagingEvents, event => {
       console.log('bar', event);
       const message = event.message;
-      if (message) {
-        console.log('message fine', event.sender)
+      const postback = event.postback;
+      if(postback) {
+        const answer = determinePayloadAnswer(postback.payload);
+        return sendTextMessage(event.sender, answer);
+      }
+      if(message) {
         updateConversationData(event.sender);
-        sendTextMessage(event.sender);
+        return sendTextMessage(event.sender);
       }
     });
   }

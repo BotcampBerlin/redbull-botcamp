@@ -29,6 +29,7 @@ function updateConversationData(sender) {
 
 function askQuestion(sender, question_text, answers) {
 
+  let answer_buttons = createButtons(answers);
   const message = {
     "attachment":{
       "type":"template",
@@ -141,10 +142,7 @@ function loopThruMessaging(events) {
     }
 
     if(conversationsData[sender.id].idx === -1) {
-      const message = {
-        message: greeting.data
-      }
-      return sendMessage(sender, message);
+      return askQuestion(sender, greeting.data.subtitle, greeting.data.buttons);
     }
 
     if(postback && !conversationsData[sender.id]['answerDelayActive']) {

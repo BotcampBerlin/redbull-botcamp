@@ -25,6 +25,7 @@ function updateConversationData(sender) {
       console.log(senderData.idx)
     }
   }
+  conversationsData[sender.id] = senderData;
 }
 
 function askQuestion(sender, question_text, answers) {
@@ -94,6 +95,7 @@ function sendDelayedMessageIfNeeded(sender, message, senderData) {
     senderData.answerDelayActive = true;
     setTimeout(() => {
       updateConversationData(sender);
+      senderData = conversationsData[sender.id]
       const newMessage = people[senderData.person][senderData.idx];
       console.log('idx, message, delay active', senderData.idx, newMessage, senderData.answerDelayActive)
       if(!newMessage) {
@@ -118,36 +120,34 @@ function handleMessageRouting(first_name, event) {
     const message = event.message;
     const postback = event.postback;
     const sender = event.sender;
-    let senderData = conversationsData[sender.id];
-    if (_.isEmpty(senderData)) {
-      senderData = {
+    if (_.isEmpty(conversationsData[sender.id])) {
+      conversationsData[sender.id] = {
         answerDelayActive: false,
         idx: -1
       }
     }
-    console.log(senderData, first_name);
-    senderData.first_name = first_name;
+    conversationsData[sender.id].first_name = first_name;
     if (event.delivery) {
       return;
     }
 
-    if(senderData.idx === -1 && postback) {
-      senderData.idx = 0;
+    if(conversationsData[sender.id].idx === -1 && postback) {
+      conversationsData[sender.id].idx = 0;
     }
-    if(senderData.idx === -1 && message) {
+    if(conversationsData[sender.id].idx === -1 && message) {
       return askQuestion(sender, greeting.data.subtitle, greeting.data.buttons);
     }
 
-    console.log(senderData);
+    console.log(conversationsData[sender.id]);
 
-    if(postback && !senderData.answerDelayActive) {
+    if(postback && !conversationsData[sender.id].answerDelayActive) {
       const message = determinePayloadAnswer(sender, postback.payload);
       console.log("postback!", postback, message);
       return sendMessage(sender, message);
     }
-    if(message && !senderData.answerDelayActive) {
+    if(message && !conversationsData[sender.id].answerDelayActive) {
       updateConversationData(sender);
-      const msg = people[senderData.person][senderData.idx];
+      const msg = people[conversationsData[sender.id].person][conversationsData[sender.id].idx];
       console.log('message!', message, msg);
       return sendMessage(sender, msg);
     }

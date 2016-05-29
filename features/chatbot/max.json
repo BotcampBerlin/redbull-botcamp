@@ -15,7 +15,7 @@
 						{
 							"type":"postback",
 							"title":"Great, let's chat with Max!",
-							"payload": "talk"
+							"payload": "talk_with_max"
 						},
 						{
 							"type":"postback",
@@ -92,7 +92,7 @@
 						{
 							"type":"postback",
 							"title":"Keep it coming! ",
-							"payload": "talk_with_max"
+							"payload": "subscribe_to_updates"
 						},
 						{
 							"type":"postback",

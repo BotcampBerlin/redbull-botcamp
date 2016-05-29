@@ -1,7 +1,7 @@
 {
   "daniel_riccardio": {
     "data": {
-      "text": "Hi Samuel! I'm Red Bull Chatbot and I can connet you to talk with our great athletes."
+      "text": "Hi {{first_name}}! I'm Red Bull Chatbot and I can connet you to talk with our great athletes."
     }
   },
   "max_verstappen": {
@@ -11,7 +11,7 @@
   },
   "talk_with_max": {
     "data": {
-      "text":  "Nice to talk with you, I'm max"
+      "text":  "Nice to talk with you, I'm Max"
     }
   },
   "talk_with_daniel": {
@@ -31,7 +31,7 @@
   },
   "monaco": {
     "data": {
-      "text": "I'm myself quite a fan of Monaco. I believe street circuits bring out the best in a driver. It’s visible to the spectators who is running the fine line between risk and reward." 
+      "text": "I'm myself quite a fan of Monaco. I believe street circuits bring out the best in a driver. It’s visible to the spectators who is running the fine line between risk and reward."
     }
   }
 }

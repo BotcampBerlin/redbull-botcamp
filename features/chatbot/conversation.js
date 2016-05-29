@@ -133,7 +133,7 @@ function loopThruMessaging(events) {
     }
 
     if(conversationsData[sender.id].idx === -1) {
-      const message = greeting.title.concat(_.padStart(greeting.subtitle, 1, ' '));
+      const message = `${greeting.title} ${greeting.subtitle}`;
       return sendMessage(sender, message);
     }
 

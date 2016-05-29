@@ -121,7 +121,7 @@ function loopThruMessaging(events) {
     }
 
     if(conversationsData[sender.id].idx === -1) {
-      const message = greeting;
+      const message = greeting.title.concat(_.padStart(greeting.subtitle, 1, ' '));
       return sendMessage(sender, message);
     }
 

@@ -1,9 +1,13 @@
 const _ = require('lodash');
-const danielJson = require('./daniel.json');
+
 const answers = require('./answers.json');
 const Sender = require('./sender');
 const greeting = require("./greeting.json");
 let conversationsData = {};
+const people = {
+  daniel: require('./daniel.json'),
+  max: require('./max.json')
+}
 
 function updateConversationData(sender) {
   console.log('update!', sender, conversationsData[sender.id]['answerDelayActive'])
@@ -12,7 +16,7 @@ function updateConversationData(sender) {
   if(_.isUndefined(conversationsData[sender.id]['idx']) || conversationsData[sender.id].idx === -1) {
     conversationsData[sender.id]['idx'] = 0;
   } else {
-    if(conversationsData[sender.id].idx >= _.size(danielJson) - 1) {
+    if(conversationsData[sender.id].idx >= _.size(people[conversationsData[sender.id][person]]) - 1) {
       console.log('bigger')
       conversationsData[sender.id].idx = -1;
     } else {
@@ -80,7 +84,15 @@ function setGreetingMessage() {
   Sender.sendSettingsMessage(message);
 }
 
-function determinePayloadAnswer(payload){
+function determinePayloadAnswer(sender, payload){
+  switch (payload) {
+    case "max_verstappen":
+      conversationsData[sender.id][person] = "max";
+      break;
+    case "daniel_riccardio":
+      conversationsData[sender.id][person] = "daniel";
+      break;
+  }
   return answers[payload];
 }
 
@@ -94,7 +106,7 @@ function sendMessage(sender, message) {
         conversationsData[sender.id]['answerDelayActive'] = true;
         setTimeout(() => {
           updateConversationData(sender);
-          const newMessage = danielJson[conversationsData[sender.id].idx];
+          const newMessage = people[conversationsData[sender.id][person]][conversationsData[sender.id].idx];
           console.log(conversationsData[sender.id].idx, newMessage, conversationsData[sender.id]['answerDelayActive'])
           if(!newMessage) {
             return;
@@ -126,12 +138,12 @@ function loopThruMessaging(events) {
     }
 
     if(postback && !conversationsData[sender.id]['answerDelayActive']) {
-      const message = determinePayloadAnswer(postback.payload);
+      const message = determinePayloadAnswer(sender, postback.payload);
       return sendMessage(sender, message);
     }
     if(message && !conversationsData[sender.id]['answerDelayActive']) {
       updateConversationData(sender);
-      const message = danielJson[conversationsData[sender.id].idx];
+      const message = people[conversationsData[sender.id][person]][conversationsData[sender.id].idx];
       console.log('message!');
       console.log(message);
       return sendMessage(sender, message);

@@ -156,13 +156,14 @@ function loopThruMessaging(events) {
 
     if(postback && !senderData.answerDelayActive) {
       const message = determinePayloadAnswer(sender, postback.payload);
+      console.log("postback!", postback, message);
       return sendMessage(sender, message);
     }
     if(message && !senderData.answerDelayActive) {
       updateConversationData(sender);
-      const message = people[senderData.person][senderData.idx];
-      console.log('message!', message);
-      return sendMessage(sender, message);
+      const msg = people[senderData.person][senderData.idx];
+      console.log('message!', message, msg);
+      return sendMessage(sender, msg);
     }
   });
 }

@@ -56,11 +56,6 @@
               "type":"postback",
               "title":"Monaco",
               "payload":"monaco"
-            },
-            {
-              "type":"postback",
-              "title":"Sweden",
-              "payload":"sweden"
             }
           ]
         }

@@ -96,6 +96,9 @@ function sendMessage(sender, message) {
           updateConversationData(sender);
           const newMessage = danielJson[conversationsData[sender.id].idx];
           console.log(conversationsData[sender.id].idx, newMessage, conversationsData[sender.id]['answerDelayActive'])
+          if(!newMessage) {
+            return;
+          }
           sendMessage(sender, newMessage);
         }, 8000)
       }

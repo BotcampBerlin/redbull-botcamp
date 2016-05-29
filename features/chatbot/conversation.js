@@ -119,7 +119,7 @@ function handleMessageRouting(first_name, event) {
     const postback = event.postback;
     const sender = event.sender;
     let senderData = conversationsData[sender.id];
-    if (!senderData) {
+    if (_.isEmpty(senderData)) {
       senderData = {
         answerDelayActive: false,
         idx: -1

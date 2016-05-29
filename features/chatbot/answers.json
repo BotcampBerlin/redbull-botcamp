@@ -23,7 +23,8 @@
   "finland": {
     "data": {
       "text": "You traveled all the way here? You are a true fan of F1! How do you like the track here?"
-    }
+    },
+    "waitForAnswer": true
   },
   "monaco": {
     "data": {

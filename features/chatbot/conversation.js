@@ -1,5 +1,5 @@
 const _ = require('lodash');
-
+const Promise = require('bluebird');
 const answers = require('./answers.json');
 const Sender = require('./sender');
 const greeting = require("./greeting.json");

@@ -167,6 +167,7 @@ function setUserFirstName(sender) {
   }
   if(!conversationsData[sender.id].first_name) {
     return Sender.getUserData(sender.id).then(data => {
+      console.log('setUserFirstName', data);
       return data.first_name;
     });
   } else {

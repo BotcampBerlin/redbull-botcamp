@@ -132,7 +132,7 @@ function sendMessage(sender, message) {
     message.data.text = interpolateString(message.data.text, senderData.first_name);
   }
   return Sender.sendMessage(sender, message.data)
-    .then(sendDelayedMessageIfNeeded.bind(sender, message, senderData));
+    .then(sendDelayedMessageIfNeeded.bind(null, sender, message, senderData));
 }
 
 function handleMessageRouting(first_name, event) {

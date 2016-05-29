@@ -101,6 +101,12 @@ function interpolateString(text, data) {
   return text.replace("{{first_name}}", data);
 }
 
+function shouldWaitForAnswer(message) {
+  console.log('Should wait?', message.waitForAnswer, message.data.attachment, _.isUndefined(message.data.attachment), (_.isUndefined(message.data.attachment) || message.data.attachment.type !== 'template'));
+  return message.waitForAnswer && (_.isUndefined(message.data.attachment) || message.data.attachment.type !== 'template');
+
+}
+
 function sendMessage(sender, message) {
   let senderData = conversationsData[sender.id];
   if (message.data.text) {
@@ -109,8 +115,8 @@ function sendMessage(sender, message) {
   return Sender.sendMessage(sender, message.data)
   .then(() => {
     senderData.answerDelayActive = false;
-    console.log('Send -> then', message.waitForAnswer, message, !message.waitForAnswer || (_.isUndefined(message.data.attachment) || message.data.attachment.type !== 'attachment'));
-    if(!message.waitForAnswer || (!_.isUndefined(message.data.attachment) && message.data.attachment.type !== 'attachment')) {
+    console.log('Send -> then', message.waitForAnswer, message, !message.waitForAnswer || (_.isUndefined(message.data.attachment) && message.data.attachment.type !== 'template'));
+    if (!shouldWaitForAnswer(message)) {
       senderData.answerDelayActive = true;
       setTimeout(() => {
         updateConversationData(sender);

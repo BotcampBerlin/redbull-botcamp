@@ -28,7 +28,7 @@
     },
     "waitForAnswer": true
   },
-   {  
+  {  
     "data":{
       "attachment": {
         "type":"image",
@@ -37,15 +37,15 @@
         }
       }
     }
-   },
+  },
   {
     "data": {
       "text": "Hey mate! Great to see you here in Monaco! I'm Daniel Ricciardo, but you can call me Dan."
     }
   },
-  {
-    "data": {
-      "text": "https://dl.dropboxusercontent.com/u/1552364/daniel-ricciardo.mp4"
+  {  
+    "data":{
+      "text": "https://www.facebook.com/video.php?v=852428524901301"
     }
   },
   {

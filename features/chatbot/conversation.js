@@ -110,7 +110,7 @@ function sendMessage(sender, message) {
   .then(() => {
     senderData.answerDelayActive = false;
     console.log('Send -> then', message.waitForAnswer, message, !message.waitForAnswer || (_.isUndefined(message.data.attachment) || message.data.attachment.type !== 'attachment'));
-    if(!message.waitForAnswer || (_.isUndefined(message.data.attachment) || message.data.attachment.type !== 'attachment')) {
+    if(!message.waitForAnswer || (!_.isUndefined(message.data.attachment) && message.data.attachment.type !== 'attachment')) {
       senderData.answerDelayActive = true;
       setTimeout(() => {
         updateConversationData(sender);

@@ -103,7 +103,7 @@ function interpolateString(text, data) {
 
 function shouldWaitForAnswer(message) {
   console.log('Should wait?', message.waitForAnswer, message.data.attachment, _.isUndefined(message.data.attachment), (!_.isUndefined(message.data.attachment) && message.data.attachment.type === 'template'));
-  return message.waitForAnswer && (_.isUndefined(message.data.attachment) || message.data.attachment.type === 'template');
+  return message.waitForAnswer;// && (_.isUndefined(message.data.attachment) || message.data.attachment.type === 'template');
 
 }
 

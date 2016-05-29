@@ -100,7 +100,7 @@ function sendDelayedMessageIfNeeded(sender, message, senderData) {
         return;
       }
       sendMessage(sender, newMessage);
-    }, 8000)
+    }, 4000)
   }
 }
 

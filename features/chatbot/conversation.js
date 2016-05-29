@@ -185,5 +185,8 @@ module.exports = {
   chat(entries) {
     const messagingEvents = _.head(entries).messaging;
     return loopThruMessaging(messagingEvents);
+  },
+  reset() {
+    conversationsData = {};
   }
 }

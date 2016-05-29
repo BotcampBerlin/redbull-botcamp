@@ -4,7 +4,8 @@ const conversation = require('./conversation');
 module.exports = {
   init(req, res, next) {
     req.chatbot = _.assign({}, req.chatbot, {
-      chat: conversation.chat
+      chat: conversation.chat,
+      reset: conversation.reset
     });
     next();
   }

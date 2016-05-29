@@ -19,5 +19,10 @@ module.exports = (initRouter) => {
     res.sendStatus(200);
   });
 
+  router.post('/reset', (req, res) => {
+    req.chatbot.reset()
+    res.sendStatus(200);
+  })
+
   return router;
 };

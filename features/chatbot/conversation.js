@@ -152,13 +152,17 @@ function handleMessageRouting(first_name, event) {
 }
 
 function loopThruMessaging(events) {
-  _.each(events, event => {
+  return Promise.each(events, event => {
     console.log('event', Object.keys(event), event.sender);
     return setUserFirstName(event.sender)
       .then(first_name => {
         return handleMessageRouting(first_name, event)
       });
-  });
+  })
+    .then(d => {
+      console.log('loopThruMessaging done');
+      console.log(d)
+    });
 }
 
 function setUserFirstName(sender) {

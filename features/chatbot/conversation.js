@@ -125,9 +125,7 @@ function handleMessageRouting(first_name, event) {
         answerDelayActive: false,
         idx: -1
       }
-      conversationsData[sender.id] = senderData;
     }
-    console.log(senderData, first_name);
     conversationsData[sender.id].first_name = first_name;
     if (event.delivery) {
       return;

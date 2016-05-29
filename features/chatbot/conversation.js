@@ -2,18 +2,19 @@ const _ = require('lodash');
 const danielJson = require('./daniel.json');
 const answers = require('./answers.json');
 const Sender = require('./sender');
+const greeting = require("./greeting.json");
 let conversationsData = {};
 
 function updateConversationData(sender) {
   console.log('update!', sender, conversationsData[sender.id]['answerDelayActive'])
 
   console.log(sender.id, conversationsData[sender.id]);
-  if(_.isUndefined(conversationsData[sender.id]['idx'])) {
+  if(_.isUndefined(conversationsData[sender.id]['idx']) || conversationsData[sender.id].idx === -1) {
     conversationsData[sender.id]['idx'] = 0;
   } else {
     if(conversationsData[sender.id].idx >= _.size(danielJson) - 1) {
       console.log('bigger')
-      conversationsData[sender.id].idx = 0;
+      conversationsData[sender.id].idx = -1;
     } else {
       console.log('increment', conversationsData[sender.id].idx, conversationsData[sender.id]['answerDelayActive']);
       conversationsData[sender.id].idx = conversationsData[sender.id].idx + 1;
@@ -40,7 +41,7 @@ function askQuestion(sender, question_text, answers) {
 function createButtons(buttons) {
   return _.map(buttons, elem => {
     if (_.isUndefined(elem.payload)) {
-      elem.payload = elem.title.toLowerCase().replace(/ /, '_');
+      elem.payload = _.snakeCase(elem.title);
     }
     return {
         "type":"postback",
@@ -51,8 +52,7 @@ function createButtons(buttons) {
 }
 
 function setGreetingMessage() {
-  const greeting = require("./greeting.json");
-  let buttons = createButtons(greeting.buttons);
+  let buttons = createButtons(greeting.data.buttons);
   const message = {
       "setting_type":"call_to_actions",
       "thread_state":"new_thread",
@@ -65,8 +65,8 @@ function setGreetingMessage() {
                 "template_type":"generic",
                 "elements":[
                   {
-                    "title": greeting.title,
-                    "subtitle": greeting.subtitle,
+                    "title": greeting.data.title,
+                    "subtitle": greeting.data.subtitle,
                     "buttons": buttons
                   }
                 ]
@@ -116,6 +116,12 @@ function loopThruMessaging(events) {
     if (event.delivery) {
       return;
     }
+
+    if(conversationsData[sender.id].idx === -1) {
+      const message = greeting;
+      return sendMessage(sender, message);
+    }
+
     if(postback && !conversationsData[sender.id]['answerDelayActive']) {
       const message = determinePayloadAnswer(postback.payload);
       return sendMessage(sender, message);

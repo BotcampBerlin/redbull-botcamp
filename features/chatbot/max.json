@@ -25,7 +25,8 @@
 					]
 				}
 			}
-		}
+		},
+		"waitForAnswer": true
 	},
 	{
 		"data" : {
@@ -40,7 +41,8 @@
 	{
 		"data" : {
 			"text": "I was born in Hasselt, Belgium and I have been driving ever since I was 4,5 years old. Is this your first time at the races? "
-		}
+		},
+		"waitForAnswer": true
 	},
 	{
 		"data" : {
@@ -65,7 +67,8 @@
 	{
 		"data" : {
 			"text": "I think I did pretty well, what do you think?"
-		}
+		},
+		"waitForAnswer": true
 	},
 	{
 		"data" : {
@@ -75,7 +78,8 @@
 	{
 		"data" : {
 			"text": "{{first_name}}, you have now met all the Red Bull F1 team members and you have the change to  win VIP access to the Monaco Cocktail Club 2016! Please give me your email address and I'll let you know the winner at 20:00 today."
-		}
+		},
+		"waitForAnswer": true
 	},
 	{
 		"data" : {
@@ -98,6 +102,7 @@
 					]
 				}
 			}
-		}
+		},
+		"waitForAnswer": true
 	}
 ]

@@ -14,7 +14,7 @@ function updateConversationData(sender) {
   console.log('update!', sender, senderData.answerDelayActive, senderData)
 
   if(_.isUndefined(senderData.idx) || senderData.idx === -1) {
-    senderData.idx = 0;
+    senderData.idx = -1;
   } else {
     if(senderData.idx >= _.size(people[senderData.person]) - 1) {
       console.log('bigger')
@@ -61,25 +61,7 @@ function setGreetingMessage() {
   const message = {
     "setting_type":"call_to_actions",
     "thread_state":"new_thread",
-    "call_to_actions": [
-      {
-        "message":{
-          "attachment":{
-            "type":"template",
-            "payload":{
-              "template_type":"generic",
-              "elements":[
-                {
-                  "title": greeting.data.title,
-                  "subtitle": greeting.data.subtitle,
-                  "buttons": buttons
-                }
-              ]
-            }
-          }
-        }
-      }
-    ]
+    "call_to_actions": []
   }
 
   Sender.sendSettingsMessage(message);
@@ -139,7 +121,8 @@ function handleMessageRouting(first_name, event) {
     let senderData = conversationsData[sender.id];
     if (!senderData) {
       senderData = {
-        answerDelayActive: false
+        answerDelayActive: false,
+        idx: -1
       }
     }
     console.log(senderData, first_name);

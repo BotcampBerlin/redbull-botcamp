@@ -79,7 +79,18 @@
   },
   {
     "data": {
-      "text": "http://www.redbull.com/de/de/motorsports/f1/stories/1331774402960/f1-vs-rugby-extremes-kraeftemessen"
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+            {
+              "title":"Red Bull Bath Rugby Challenge",
+              "item_url":"http://redbullchannels.pmd.redbull.com/hds/1439051358001/201602/436/1439051358001_4731701557001_4731498392001.mp4"
+            }
+          ]
+        }
+      }
     }
   },
   {
@@ -122,4 +133,3 @@
     }
   }
 ]
-

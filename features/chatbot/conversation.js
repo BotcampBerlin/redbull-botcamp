@@ -106,6 +106,25 @@ function shouldWaitForAnswer(message) {
   return message.waitForAnswer;// && (_.isUndefined(message.data.attachment) || message.data.attachment.type === 'template');
 }
 
+function sendDelayedMessageIfNeeded() {
+  const sender = this.sender;
+  const origMessage = this.message;
+  const senderData = this.senderData;
+  senderData.answerDelayActive = false;
+  if (!shouldWaitForAnswer(origMessage)) {
+    senderData.answerDelayActive = true;
+    setTimeout(() => {
+      updateConversationData(sender);
+      const newMessage = people[senderData.person][senderData.idx];
+      console.log('idx, message, delay active', senderData.idx, newMessage, senderData.answerDelayActive)
+      if(!newMessage) {
+        return;
+      }
+      sendMessage(sender, newMessage);
+    }, 8000)
+  }
+}
+
 function sendMessage(sender, message) {
   console.trace("Sending", message);
   let senderData = conversationsData[sender.id];
@@ -113,21 +132,7 @@ function sendMessage(sender, message) {
     message.data.text = interpolateString(message.data.text, senderData.first_name);
   }
   return Sender.sendMessage(sender, message.data)
-  .then(() => {
-    senderData.answerDelayActive = false;
-    if (!shouldWaitForAnswer(message)) {
-      senderData.answerDelayActive = true;
-      setTimeout(() => {
-        updateConversationData(sender);
-        const newMessage = people[senderData.person][senderData.idx];
-        console.log('idx, message, delay active', senderData.idx, newMessage, senderData.answerDelayActive)
-        if(!newMessage) {
-          return;
-        }
-        sendMessage(sender, newMessage);
-      }, 8000)
-    }
-  });
+    .then(sendDelayedMessageIfNeeded.bind(sender, message, senderData));
 }
 
 function handleMessageRouting(first_name, event) {
@@ -140,6 +145,7 @@ function handleMessageRouting(first_name, event) {
         answerDelayActive: false
       }
     }
+    console.log(senderData, first_name);
     senderData.first_name = first_name;
     if (event.delivery) {
       return;

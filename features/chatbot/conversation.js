@@ -16,7 +16,7 @@ function updateConversationData(sender) {
   if(_.isUndefined(conversationsData[sender.id]['idx']) || conversationsData[sender.id].idx === -1) {
     conversationsData[sender.id]['idx'] = 0;
   } else {
-    if(conversationsData[sender.id].idx >= _.size(people[conversationsData[sender.id][person]]) - 1) {
+    if(conversationsData[sender.id].idx >= _.size(people[conversationsData[sender.id]["person"]]) - 1) {
       console.log('bigger')
       conversationsData[sender.id].idx = -1;
     } else {
@@ -87,10 +87,10 @@ function setGreetingMessage() {
 function determinePayloadAnswer(sender, payload){
   switch (payload) {
     case "max_verstappen":
-      conversationsData[sender.id][person] = "max";
+      conversationsData[sender.id]["person"] = "max";
       break;
     case "daniel_riccardio":
-      conversationsData[sender.id][person] = "daniel";
+      conversationsData[sender.id]["person"] = "daniel";
       break;
   }
   return answers[payload];
@@ -106,7 +106,7 @@ function sendMessage(sender, message) {
         conversationsData[sender.id]['answerDelayActive'] = true;
         setTimeout(() => {
           updateConversationData(sender);
-          const newMessage = people[conversationsData[sender.id][person]][conversationsData[sender.id].idx];
+          const newMessage = people[conversationsData[sender.id]["person"]][conversationsData[sender.id].idx];
           console.log(conversationsData[sender.id].idx, newMessage, conversationsData[sender.id]['answerDelayActive'])
           if(!newMessage) {
             return;
@@ -143,7 +143,7 @@ function loopThruMessaging(events) {
     }
     if(message && !conversationsData[sender.id]['answerDelayActive']) {
       updateConversationData(sender);
-      const message = people[conversationsData[sender.id][person]][conversationsData[sender.id].idx];
+      const message = people[conversationsData[sender.id]["person"]][conversationsData[sender.id].idx];
       console.log('message!');
       console.log(message);
       return sendMessage(sender, message);

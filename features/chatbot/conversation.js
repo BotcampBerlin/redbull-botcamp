@@ -130,6 +130,7 @@ function loopThruMessaging(events) {
     const message = event.message;
     const postback = event.postback;
     const sender = event.sender;
+    setUserFirstName(sender);
     if (!conversationsData[sender.id]) {
       conversationsData[sender.id] = {
           answerDelayActive: false
@@ -140,7 +141,9 @@ function loopThruMessaging(events) {
     }
 
     if(conversationsData[sender.id].idx === -1) {
-      const message = `${greeting.data.title} ${greeting.data.subtitle}`;
+      const message = {
+        message: greeting.data
+      }
       return sendMessage(sender, message);
     }
 
@@ -156,6 +159,18 @@ function loopThruMessaging(events) {
       return sendMessage(sender, message);
     }
   });
+}
+
+function setUserFirstName(sender) {
+  if(!conversationsData[sender.id]) {
+    conversationsData[sender.id] = {};
+  }
+  if(!conversationsData[sender.id]['first_name']) {
+    Sender.getUserData(sender.id).then(data => {
+      console.log("User data: ", data);
+      conversationsData[sender.id]['first_name'] = data.first_name;
+    });
+  }
 }
 
 setGreetingMessage();

@@ -104,7 +104,6 @@ function interpolateString(text, data) {
 function shouldWaitForAnswer(message) {
   console.log('Should wait?', message.waitForAnswer, message.data.attachment, _.isUndefined(message.data.attachment), (!_.isUndefined(message.data.attachment) && message.data.attachment.type === 'template'));
   return message.waitForAnswer;// && (_.isUndefined(message.data.attachment) || message.data.attachment.type === 'template');
-
 }
 
 function sendMessage(sender, message) {
@@ -115,18 +114,18 @@ function sendMessage(sender, message) {
   return Sender.sendMessage(sender, message.data)
   .then(() => {
     senderData.answerDelayActive = false;
-    if (!shouldWaitForAnswer(message)) {
-      senderData.answerDelayActive = true;
-      setTimeout(() => {
-        updateConversationData(sender);
-        const newMessage = people[senderData.person][senderData.idx];
-        console.log('idx, message, delay active', senderData.idx, newMessage, senderData.answerDelayActive)
-        if(!newMessage) {
-          return;
-        }
-        sendMessage(sender, newMessage);
-      }, 8000)
-    }
+    // if (!shouldWaitForAnswer(message)) {
+    //   senderData.answerDelayActive = true;
+    //   setTimeout(() => {
+    //     updateConversationData(sender);
+    //     const newMessage = people[senderData.person][senderData.idx];
+    //     console.log('idx, message, delay active', senderData.idx, newMessage, senderData.answerDelayActive)
+    //     if(!newMessage) {
+    //       return;
+    //     }
+    //     sendMessage(sender, newMessage);
+    //   }, 8000)
+    // }
   });
 }
 

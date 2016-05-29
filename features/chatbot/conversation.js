@@ -90,7 +90,7 @@ function sendMessage(sender, message) {
     .then(() => {
       console.log(conversationsData[sender.id]['answerDelayActive']);
       conversationsData[sender.id]['answerDelayActive'] = false;
-      if(!message.waitForAnswer) {
+      if(!message.waitForAnswer || (_.isUndefined(message.attachment) || message.attachment.type !== 'attachment')) {
         conversationsData[sender.id]['answerDelayActive'] = true;
         setTimeout(() => {
           updateConversationData(sender);

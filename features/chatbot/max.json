@@ -104,5 +104,11 @@
 			}
 		},
 		"waitForAnswer": true
-	}
+	},
+  {
+    "data" : {
+      "text": "I'll get back to you soon, bye for now!"
+    },
+    "waitForAnswer": true
+  }
 ]

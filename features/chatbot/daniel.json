@@ -40,11 +40,6 @@
   },
   {
     "data": {
-      "text": "I remember in 2014 when I got to the podium in Monaco I came back to my house with the trophy and champagne and sat there thinking I just had an F1 race an hour ago and now I’m sat in my house, this is weird."
-    }
-  },
-  {
-    "data": {
       "attachment": {
         "type": "template",
         "payload": {
@@ -96,5 +91,35 @@
     "data": {
       "text": "Now I have to get going, but it was great chatting with you {{first_name}}. Wave for me when I drive by. :)"
     }
+  },
+  {
+    "data": {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type":"button",
+          "text":"Hi, it's Red Bull Wingbot here again! Did you have a nice chat with Daniel?",
+          "buttons":[
+            {
+              "type":"postback",
+              "title":"Yes",
+              "payload": "yes"
+            },
+            {
+              "type":"postback",
+              "title":"It was ok",
+              "payload":"ok"
+            }
+          ]
+        }
+      }
+    },
+    "waitForAnswer": true
+  },
+  {
+    "data": {
+      "text": "{{first_name}}, you are now a step closer to the VIP access to the Monaco Cocktail Club 2016! Keep on chatting!"
+    }
   }
 ]
+

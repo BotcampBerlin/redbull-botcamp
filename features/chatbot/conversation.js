@@ -10,19 +10,19 @@ const people = {
 }
 
 function updateConversationData(sender) {
-  console.log('update!', sender, conversationsData[sender.id]['answerDelayActive'])
+  let senderData = conversationsData[sender.id];
+  console.log('update!', sender, senderData.answerDelayActive, senderData)
 
-  console.log(sender.id, conversationsData[sender.id]);
-  if(_.isUndefined(conversationsData[sender.id]['idx']) || conversationsData[sender.id].idx === -1) {
-    conversationsData[sender.id]['idx'] = 0;
+  if(_.isUndefined(senderData.idx) || senderData.idx === -1) {
+    senderData.idx = 0;
   } else {
-    if(conversationsData[sender.id].idx >= _.size(people[conversationsData[sender.id]["person"]]) - 1) {
+    if(senderData.idx >= _.size(people[senderData.person]) - 1) {
       console.log('bigger')
-      conversationsData[sender.id].idx = -1;
+      senderData.idx = -1;
     } else {
-      console.log('increment', conversationsData[sender.id].idx, conversationsData[sender.id]['answerDelayActive']);
-      conversationsData[sender.id].idx = conversationsData[sender.id].idx + 1;
-      console.log(conversationsData[sender.id].idx)
+      console.log('increment', senderData.idx, senderData.answerDelayActive);
+      senderData.idx = senderData.idx + 1;
+      console.log(senderData.idx)
     }
   }
 }
@@ -49,9 +49,9 @@ function createButtons(buttons) {
       elem.payload = _.snakeCase(elem.title);
     }
     return {
-        "type":"postback",
-        "title": elem.title,
-        "payload": elem.payload
+      "type":"postback",
+      "title": elem.title,
+      "payload": elem.payload
     };
   });
 }
@@ -59,26 +59,26 @@ function createButtons(buttons) {
 function setGreetingMessage() {
   let buttons = createButtons(greeting.data.buttons);
   const message = {
-      "setting_type":"call_to_actions",
-      "thread_state":"new_thread",
-      "call_to_actions": [
-        {
-          "message":{
-            "attachment":{
-              "type":"template",
-              "payload":{
-                "template_type":"generic",
-                "elements":[
-                  {
-                    "title": greeting.data.title,
-                    "subtitle": greeting.data.subtitle,
-                    "buttons": buttons
-                  }
-                ]
-              }
+    "setting_type":"call_to_actions",
+    "thread_state":"new_thread",
+    "call_to_actions": [
+      {
+        "message":{
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"generic",
+              "elements":[
+                {
+                  "title": greeting.data.title,
+                  "subtitle": greeting.data.subtitle,
+                  "buttons": buttons
+                }
+              ]
             }
           }
         }
+      }
     ]
   }
 
@@ -88,11 +88,11 @@ function setGreetingMessage() {
 function determinePayloadAnswer(sender, payload){
   switch (payload) {
     case "max_verstappen":
-      conversationsData[sender.id]["person"] = "max";
-      break;
+    conversationsData[sender.id].person = "max";
+    break;
     case "daniel_riccardio":
-      conversationsData[sender.id]["person"] = "daniel";
-      break;
+    conversationsData[sender.id].person = "daniel";
+    break;
   }
   return answers[payload];
 }
@@ -102,55 +102,60 @@ function interpolateString(text, data) {
 }
 
 function sendMessage(sender, message) {
+  let senderData = conversationsData[sender.id];
   if (message.data.text) {
-    message.data.text = interpolateString(message.data.text, conversationsData[sender.id]["first_name"]);
+    message.data.text = interpolateString(message.data.text, senderData.first_name);
   }
   return Sender.sendMessage(sender, message.data)
-    .then(() => {
-      conversationsData[sender.id]['answerDelayActive'] = false;
-      console.log('Send -> then', message.waitForAnswer, message);
-      if(!message.waitForAnswer || (_.isUndefined(message.data.attachment) || message.data.attachment.type !== 'attachment')) {
-        conversationsData[sender.id]['answerDelayActive'] = true;
-        setTimeout(() => {
-          updateConversationData(sender);
-          const newMessage = people[conversationsData[sender.id]["person"]][conversationsData[sender.id].idx];
-          console.log('idx, message, delay active', conversationsData[sender.id].idx, newMessage, conversationsData[sender.id]['answerDelayActive'])
-          if(!newMessage) {
-            return;
-          }
-          sendMessage(sender, newMessage);
-        }, 8000)
-      }
-    });
+  .then(() => {
+    senderData.answerDelayActive = false;
+    console.log('Send -> then', message.waitForAnswer, message, !message.waitForAnswer || (_.isUndefined(message.data.attachment) || message.data.attachment.type !== 'attachment'));
+    if(!message.waitForAnswer || (_.isUndefined(message.data.attachment) || message.data.attachment.type !== 'attachment')) {
+      senderData.answerDelayActive = true;
+      setTimeout(() => {
+        updateConversationData(sender);
+        const newMessage = people[senderData.person][senderData.idx];
+        console.log('idx, message, delay active', senderData.idx, newMessage, senderData.answerDelayActive)
+        if(!newMessage) {
+          return;
+        }
+        sendMessage(sender, newMessage);
+      }, 8000)
+    }
+  });
 }
 
 function loopThruMessaging(events) {
   _.each(events, event => {
-    console.log('event', event);
+    console.log('event', Object.keys(event), event.sender);
     const message = event.message;
     const postback = event.postback;
     const sender = event.sender;
     setUserFirstName(sender);
-    if (!conversationsData[sender.id]) {
-      conversationsData[sender.id] = {
-          answerDelayActive: false
+    let senderData = conversationsData[sender.id];
+    if (!senderData) {
+      senderData = {
+        answerDelayActive: false
       }
     }
     if (event.delivery) {
       return;
     }
 
-    if(conversationsData[sender.id].idx === -1) {
+    if(senderData.idx === -1 && postback) {
+      senderData.idx = 0;
+    }
+    if(senderData.idx === -1) {
       return askQuestion(sender, greeting.data.subtitle, greeting.data.buttons);
     }
 
-    if(postback && !conversationsData[sender.id]['answerDelayActive']) {
+    if(postback && !senderData.answerDelayActive) {
       const message = determinePayloadAnswer(sender, postback.payload);
       return sendMessage(sender, message);
     }
-    if(message && !conversationsData[sender.id]['answerDelayActive']) {
+    if(message && !senderData.answerDelayActive) {
       updateConversationData(sender);
-      const message = people[conversationsData[sender.id]["person"]][conversationsData[sender.id].idx];
+      const message = people[senderData.person][senderData.idx];
       console.log('message!', message);
       return sendMessage(sender, message);
     }
@@ -161,10 +166,10 @@ function setUserFirstName(sender) {
   if(!conversationsData[sender.id]) {
     conversationsData[sender.id] = {};
   }
-  if(!conversationsData[sender.id]['first_name']) {
+  if(!conversationsData[sender.id].first_name) {
     Sender.getUserData(sender.id).then(data => {
       console.log("User data: ", data);
-      conversationsData[sender.id]['first_name'] = data.first_name;
+      conversationsData[sender.id].first_name = data.first_name;
     });
   }
 }

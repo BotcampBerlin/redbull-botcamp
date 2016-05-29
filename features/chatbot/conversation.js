@@ -133,7 +133,7 @@ function loopThruMessaging(events) {
     }
 
     if(conversationsData[sender.id].idx === -1) {
-      const message = `${greeting.title} ${greeting.subtitle}`;
+      const message = `${greeting.data.title} ${greeting.data.subtitle}`;
       return sendMessage(sender, message);
     }
 

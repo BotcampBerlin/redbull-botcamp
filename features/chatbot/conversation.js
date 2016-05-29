@@ -102,20 +102,19 @@ function interpolateString(text, data) {
 }
 
 function sendMessage(sender, message) {
-  console.log(message, conversationsData[sender.id]['answerDelayActive']);
   if (message.data.text) {
     message.data.text = interpolateString(message.data.text, conversationsData[sender.id]["first_name"]);
   }
   return Sender.sendMessage(sender, message.data)
     .then(() => {
-      console.log(conversationsData[sender.id]['answerDelayActive']);
       conversationsData[sender.id]['answerDelayActive'] = false;
-      if(!message.waitForAnswer || (_.isUndefined(message.attachment) || message.attachment.type !== 'attachment')) {
+      console.log('Send -> then', message.waitForAnswer, message);
+      if(!message.waitForAnswer || (_.isUndefined(message.data.attachment) || message.data.attachment.type !== 'attachment')) {
         conversationsData[sender.id]['answerDelayActive'] = true;
         setTimeout(() => {
           updateConversationData(sender);
           const newMessage = people[conversationsData[sender.id]["person"]][conversationsData[sender.id].idx];
-          console.log(conversationsData[sender.id].idx, newMessage, conversationsData[sender.id]['answerDelayActive'])
+          console.log('idx, message, delay active', conversationsData[sender.id].idx, newMessage, conversationsData[sender.id]['answerDelayActive'])
           if(!newMessage) {
             return;
           }
@@ -127,7 +126,7 @@ function sendMessage(sender, message) {
 
 function loopThruMessaging(events) {
   _.each(events, event => {
-    console.log('bar', event);
+    console.log('event', event);
     const message = event.message;
     const postback = event.postback;
     const sender = event.sender;
@@ -152,8 +151,7 @@ function loopThruMessaging(events) {
     if(message && !conversationsData[sender.id]['answerDelayActive']) {
       updateConversationData(sender);
       const message = people[conversationsData[sender.id]["person"]][conversationsData[sender.id].idx];
-      console.log('message!');
-      console.log(message);
+      console.log('message!', message);
       return sendMessage(sender, message);
     }
   });

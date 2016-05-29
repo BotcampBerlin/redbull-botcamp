@@ -107,6 +107,7 @@ function shouldWaitForAnswer(message) {
 }
 
 function sendMessage(sender, message) {
+  console.trace("Sending", message);
   let senderData = conversationsData[sender.id];
   if (message.data.text) {
     message.data.text = interpolateString(message.data.text, senderData.first_name);

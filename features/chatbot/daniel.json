@@ -82,7 +82,9 @@
           "elements":[
             {
               "title":"Red Bull Bath Rugby Challenge",
-              "item_url":"http://redbullchannels.pmd.redbull.com/hds/1439051358001/201602/436/1439051358001_4731701557001_4731498392001.mp4"
+              "subtitle": "foo",
+              "item_url":"http://redbullchannels.pmd.redbull.com/hds/1439051358001/201602/436/1439051358001_4731701557001_4731498392001.mp4",
+              "image_url": "http://redbullchannels.pmd.redbull.com/hds/1439051358001/201602/436/1439051358001_4731701557001_4731498392001.mp4"
             }
           ]
         }
@@ -125,7 +127,12 @@
   },
   {
     "data": {
-      "text": "{{first_name}}, you are now a step closer to the VIP access to the Monaco Cocktail Club 2016! Keep on chatting!"
+      "attachment": {
+        "type": "image",
+        "payload": {
+            "url": "https://dl.dropboxusercontent.com/u/1552364/wingbot-location-map.jpg"
+        }
+      }
     }
   }
 ]

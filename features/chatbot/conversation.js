@@ -106,12 +106,9 @@ function shouldWaitForAnswer(message) {
   return message.waitForAnswer;// && (_.isUndefined(message.data.attachment) || message.data.attachment.type === 'template');
 }
 
-function sendDelayedMessageIfNeeded() {
-  const sender = this.sender;
-  const origMessage = this.message;
-  const senderData = this.senderData;
+function sendDelayedMessageIfNeeded(sender, message, senderData) {
   senderData.answerDelayActive = false;
-  if (!shouldWaitForAnswer(origMessage)) {
+  if (!shouldWaitForAnswer(message)) {
     senderData.answerDelayActive = true;
     setTimeout(() => {
       updateConversationData(sender);

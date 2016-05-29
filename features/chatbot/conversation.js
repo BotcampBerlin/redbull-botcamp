@@ -134,7 +134,7 @@ function handleMessageRouting(first_name, event) {
     if(senderData.idx === -1 && postback) {
       senderData.idx = 0;
     }
-    if(senderData.idx === -1) {
+    if(senderData.idx === -1 && message) {
       return askQuestion(sender, greeting.data.subtitle, greeting.data.buttons);
     }
 

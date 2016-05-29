@@ -14,7 +14,7 @@
 					"buttons":[
 						{
 							"type":"postback",
-							"title":"Great, let's chat with Max!",
+							"title":"Let's do this!",
 							"payload": "talk_with_max"
 						},
 						{

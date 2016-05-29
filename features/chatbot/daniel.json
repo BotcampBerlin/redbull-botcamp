@@ -14,7 +14,7 @@
           "buttons":[
             {
               "type":"postback",
-              "title":"Of course",
+              "title":"Of course!",
               "payload": "talk_with_daniel"
             },
             {
@@ -84,7 +84,7 @@
   },
   {
     "data": {
-      "text": "<video placeholder>"
+      "text": "http://www.redbull.com/de/de/motorsports/f1/stories/1331774402960/f1-vs-rugby-extremes-kraeftemessen"
     }
   },
   {

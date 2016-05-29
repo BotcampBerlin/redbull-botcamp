@@ -28,8 +28,9 @@
   },
   "monaco": {
     "data": {
-      "text": "I'm myself quite a fan of Monaco. I believe street circuits bring out the best in a driver. It’s visible to the spectators who is running the fine line between risk and reward."
-    }
+      "text": "Locals as well?  How do you like the track here?"
+    },
+    "waitForAnswer": true
   },
   "ok": {
     "data": {

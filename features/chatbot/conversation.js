@@ -130,19 +130,17 @@ function sendMessage(sender, message) {
   });
 }
 
-function loopThruMessaging(events) {
-  _.each(events, event => {
-    console.log('event', Object.keys(event), event.sender);
+function handleMessageRouting(first_name, event) {
     const message = event.message;
     const postback = event.postback;
     const sender = event.sender;
-    setUserFirstName(sender);
     let senderData = conversationsData[sender.id];
     if (!senderData) {
       senderData = {
         answerDelayActive: false
       }
     }
+    senderData.first_name = first_name;
     if (event.delivery) {
       return;
     }
@@ -165,6 +163,15 @@ function loopThruMessaging(events) {
       console.log('message!', message, msg);
       return sendMessage(sender, msg);
     }
+}
+
+function loopThruMessaging(events) {
+  _.each(events, event => {
+    console.log('event', Object.keys(event), event.sender);
+    return setUserFirstName(event.sender)
+      .then(first_name => {
+        return handleMessageRouting(first_name, event)
+      });
   });
 }
 
@@ -173,10 +180,11 @@ function setUserFirstName(sender) {
     conversationsData[sender.id] = {};
   }
   if(!conversationsData[sender.id].first_name) {
-    Sender.getUserData(sender.id).then(data => {
-      console.log("User data: ", data);
-      conversationsData[sender.id].first_name = data.first_name;
+    return Sender.getUserData(sender.id).then(data => {
+      return data.first_name;
     });
+  } else {
+    return Promise.resolve(conversationsData[sender.id].first_name);
   }
 }
 

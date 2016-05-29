@@ -14,14 +14,10 @@
       "text":  "Nice to talk with you, I'm Max"
     }
   },
-  "talk_with_daniel": {
+  "talk_with_daniel": 
+  {
     "data": {
-      "attachment": {
-        "type":"image",
-        "payload":{
-          "url":"https://dl.dropboxusercontent.com/u/1552364/daniel_ricciardo_profile.jpg"
-        }
-      }
+      "text": "Hey mate! Great to see you here in Monaco! I'm Daniel Ricciardo, but you can call me Dan."
     }
   },
   "finland": {

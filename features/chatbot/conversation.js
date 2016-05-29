@@ -138,6 +138,8 @@ function handleMessageRouting(first_name, event) {
       return askQuestion(sender, greeting.data.subtitle, greeting.data.buttons);
     }
 
+    console.log(senderData);
+
     if(postback && !senderData.answerDelayActive) {
       const message = determinePayloadAnswer(sender, postback.payload);
       console.log("postback!", postback, message);

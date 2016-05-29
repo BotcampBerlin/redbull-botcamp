@@ -1,7 +1,7 @@
 [
 	{
 		"data" : {
-			"text": "Hi Samuel! Back for more? ;)"
+			"text": "Hi {{first_name}}! Back for more? ;)"
 		}
 	},
 	{
@@ -69,12 +69,12 @@
 	},
 	{
 		"data" : {
-			"text": "Thanks for stopping by Samuel and good luck with the competition."
+			"text": "Thanks for stopping by {{first_name}} and good luck with the competition."
 		}
 	},
 	{
 		"data" : {
-			"text": "Samuel, you have now met all the Red Bull F1 team members and you have the change to  win VIP access to the Monaco Cocktail Club 2016! Please give me your email address and I'll let you know the winner at 20:00 today."
+			"text": "{{first_name}}, you have now met all the Red Bull F1 team members and you have the change to  win VIP access to the Monaco Cocktail Club 2016! Please give me your email address and I'll let you know the winner at 20:00 today."
 		}
 	},
 	{

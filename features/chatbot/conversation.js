@@ -96,8 +96,15 @@ function determinePayloadAnswer(sender, payload){
   return answers[payload];
 }
 
+function interpolateString(text, data) {
+  return text.replace("{{first_name}}", data);
+}
+
 function sendMessage(sender, message) {
   console.log(message, conversationsData[sender.id]['answerDelayActive']);
+  if (message.data.text) {
+    message.data.text = interpolateString(message.data.text, conversationsData[sender.id]["first_name"]);
+  }
   return Sender.sendMessage(sender, message.data)
     .then(() => {
       console.log(conversationsData[sender.id]['answerDelayActive']);

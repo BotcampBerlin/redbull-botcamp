@@ -115,7 +115,7 @@
   },
   {
     "data": {
-      "text": "Now I have to get going, but it was great chatting with you Samuel. Wave for me when I drive by. :)"
+      "text": "Now I have to get going, but it was great chatting with you {{first_name}}. Wave for me when I drive by. :)"
     }
   }
 ]

@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "start:watch": "nodemon --exec 'npm start'"
   },
   "dependencies": {
     "bluebird": "^3.4.0",
@@ -16,5 +17,8 @@
   "repository": {},
   "engines": {
     "node": "6.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.2"
   }
 }

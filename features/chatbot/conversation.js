@@ -116,25 +116,45 @@ function sendMessage(sender, message) {
     .then(sendDelayedMessageIfNeeded.bind(null, sender, message, senderData));
 }
 
+function setDefaultValues(sender) {
+  conversationsData[sender.id] = {
+    answerDelayActive: false,
+    idx: -1,
+    person: ""
+  }
+}
+
+function setConversationToFirstItem(sender) {
+  conversationsData[sender.id].idx = 0;
+}
+
 function handleMessageRouting(first_name, event) {
     const message = event.message;
     const postback = event.postback;
     const sender = event.sender;
-    if (_.isEmpty(conversationsData[sender.id])) {
+
+    console.log("Senders data", conversationsData[sender.id]);
+    if (message && message.text === "reset") {
+      console.log("Resetting sender data");
       conversationsData[sender.id] = {
-        answerDelayActive: false,
-        idx: -1
-      }
+        first_name: conversationsData[sender.id].first_name
+      };
+    }
+    if (_.isEmpty(conversationsData[sender.id])) {
+      setDefaultValues(sender);
     }
     conversationsData[sender.id].first_name = first_name;
     if (event.delivery) {
       return;
     }
 
-    if(conversationsData[sender.id].idx === -1 && postback) {
-      conversationsData[sender.id].idx = 0;
+    let startOfConversation = conversationsData[sender.id].idx === -1;
+
+    if(startOfConversation && postback) {
+      setConversationToFirstItem(sender);
     }
-    if(conversationsData[sender.id].idx === -1 && message) {
+
+    if(startOfConversation && message) {
       return askQuestion(sender, greeting.data.subtitle, greeting.data.buttons);
     }
 
